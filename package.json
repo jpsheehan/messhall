@@ -1,0 +1,15 @@
+{
+  "dependencies": {
+    "express": "^4.16.3"
+  },
+  "name": "Messhall",
+  "version": "1.0.0",
+  "main": "index.js",
+  "repository": "https://github.com/jpsheehan/messhall.git",
+  "author": "Jesse Sheehan <jesse@sheehan.nz>",
+  "license": "All Rights Reserved",
+  "private": true,
+  "scripts": {
+    "start": "node index.js"
+  }
+}
