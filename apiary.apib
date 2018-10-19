@@ -1,0 +1,152 @@
+FORMAT: 1A
+HOST: http://polls.apiblueprint.org/
+
+# jpsheehan
+
+Polls is a simple API allowing consumers to view polls and vote in them.
+
+## Users Collection [/users]
+
+### List All Users [GET]
+
++ Response 200 (application/json)
+
+        [
+            {
+                "id": 1,
+                "name": "John Doe",
+                "email": "john@example.com",
+                "role": "user"
+            },
+            {
+                "id": 2,
+                "name": "Jane Doe",
+                "email": "jane@example.com",
+                "role": "user"
+            }
+        ]
+
+### Create a New User [POST]
+
++ Request (application/json)
+
+        {
+            "name": "John Doe",
+            "email": "john@example.com",
+            "role": "user"
+        }
+
++ Response 201 (application/json)
+
+    + Headers
+
+            Location: /api/users/1
+
+    + Body
+
+            {
+                "id": 1,
+                "name": "John Doe",
+                "email": "john@example.com",
+                "role": "user"
+            }
+
+### Delete a User [DELETE]
+
++ Request (application/json)
+
+        {
+            "id": 1
+        }
+
++ Response 200 (application/json)
+
+        {
+            "id": 1,
+            "name": "John Doe",
+            "email": "john@example.com",
+            "role": "user"
+        }
+
++ Response 403 (application/json)
+
+This is returned when the user is not signed in.
+
+    + Headers
+
+            Location: /sign-in
+
+
+## Questions Collection [/questions]
+
+### List All Questions [GET]
+
++ Response 200 (application/json)
+
+        [
+            {
+                "question": "Favourite programming language?",
+                "published_at": "2015-08-05T08:40:51.620Z",
+                "choices": [
+                    {
+                        "choice": "Swift",
+                        "votes": 2048
+                    }, {
+                        "choice": "Python",
+                        "votes": 1024
+                    }, {
+                        "choice": "Objective-C",
+                        "votes": 512
+                    }, {
+                        "choice": "Ruby",
+                        "votes": 256
+                    }
+                ]
+            }
+        ]
+
+### Create a New Question [POST]
+
+You may create your own question using this action. It takes a JSON
+object containing a question and a collection of answers in the
+form of choices.
+
++ Request (application/json)
+
+        {
+            "question": "Favourite programming language?",
+            "choices": [
+                "Swift",
+                "Python",
+                "Objective-C",
+                "Ruby"
+            ]
+        }
+
++ Response 201 (application/json)
+
+    + Headers
+
+            Location: /questions/2
+
+    + Body
+
+            {
+                "question": "Favourite programming language?",
+                "published_at": "2015-08-05T08:40:51.620Z",
+                "choices": [
+                    {
+                        "choice": "Swift",
+                        "votes": 0
+                    }, {
+                        "choice": "Python",
+                        "votes": 0
+                    }, {
+                        "choice": "Objective-C",
+                        "votes": 0
+                    }, {
+                        "choice": "Ruby",
+                        "votes": 0
+                    }
+                ]
+            }
