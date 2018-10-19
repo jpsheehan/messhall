@@ -1,9 +1,11 @@
 FORMAT: 1A
 HOST: http://polls.apiblueprint.org/
 
-# jpsheehan
+# MessHallAPI
 
-Polls is a simple API allowing consumers to view polls and vote in them.
+The MessHallAPI is a simple API for managing users, sessions and attendance.
+
+# Group Users
 
 ## Users Collection [/users]
 
@@ -40,7 +42,7 @@ Polls is a simple API allowing consumers to view polls and vote in them.
 
     + Headers
 
-            Location: /api/users/1
+            Location: /api/users/{id}
 
     + Body
 
@@ -51,13 +53,9 @@ Polls is a simple API allowing consumers to view polls and vote in them.
                 "role": "user"
             }
 
-### Delete a User [DELETE]
+## Users [/users/{id}]
 
-+ Request (application/json)
-
-        {
-            "id": 1
-        }
+### List a Single User [GET]
 
 + Response 200 (application/json)
 
@@ -68,85 +66,19 @@ Polls is a simple API allowing consumers to view polls and vote in them.
             "role": "user"
         }
 
-+ Response 403 (application/json)
-
-This is returned when the user is not signed in.
-
-    + Headers
-
-            Location: /sign-in
-
-
-## Questions Collection [/questions]
-
-### List All Questions [GET]
-
-+ Response 200 (application/json)
-
-        [
-            {
-                "question": "Favourite programming language?",
-                "published_at": "2015-08-05T08:40:51.620Z",
-                "choices": [
-                    {
-                        "choice": "Swift",
-                        "votes": 2048
-                    }, {
-                        "choice": "Python",
-                        "votes": 1024
-                    }, {
-                        "choice": "Objective-C",
-                        "votes": 512
-                    }, {
-                        "choice": "Ruby",
-                        "votes": 256
-                    }
-                ]
-            }
-        ]
-
-### Create a New Question [POST]
-
-You may create your own question using this action. It takes a JSON
-object containing a question and a collection of answers in the
-form of choices.
+### Delete a User [DELETE]
 
 + Request (application/json)
 
         {
-            "question": "Favourite programming language?",
-            "choices": [
-                "Swift",
-                "Python",
-                "Objective-C",
-                "Ruby"
-            ]
+            "id": {id}
         }
 
-+ Response 201 (application/json)
++ Response 200 (application/json)
 
-    + Headers
-
-            Location: /questions/2
-
-    + Body
-
-            {
-                "question": "Favourite programming language?",
-                "published_at": "2015-08-05T08:40:51.620Z",
-                "choices": [
-                    {
-                        "choice": "Swift",
-                        "votes": 0
-                    }, {
-                        "choice": "Python",
-                        "votes": 0
-                    }, {
-                        "choice": "Objective-C",
-                        "votes": 0
-                    }, {
-                        "choice": "Ruby",
-                        "votes": 0
-                    }
-                ]
-            }
+        {
+            "id": 1,
+            "name": "John Doe",
+            "email": "john@example.com",
+            "role": "user"
+        }
