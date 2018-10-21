@@ -22,15 +22,15 @@ const db_config = {
 };
 
 // configure the database
-const conn = new Connection(db_config);
-conn.on('connect', err => {
-  if (err) {
-    console.log(err);
-  } else {
-    console.log("Connected!");
-    conn.close();
-  }
-});
+// const conn = new Connection(db_config);
+// conn.on('connect', err => {
+//   if (err) {
+//     console.log(err);
+//   } else {
+//     console.log("Connected!");
+//     conn.close();
+//   }
+// });
 
 // configure authentication
 const auth = jwt({
