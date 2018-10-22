@@ -28,8 +28,7 @@
   "license": "All Rights Reserved",
   "private": true,
   "scripts": {
-    "start": "tsc; node index.js",
-    "build": "tsc"
+    "start": "tsc; node index.js"
   },
   "devDependencies": {
     "tslint": "^5.11.0"
