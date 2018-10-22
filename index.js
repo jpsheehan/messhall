@@ -8,7 +8,7 @@ const jwt = require("express-jwt");
 require("dotenv").config();
 
 // configure the port number to run on
-const port = process.env.PORT || process.env.NODE_PORT || 3000;
+const port = process.env.PORT || 3000;
 
 // configure the database
 const db_config = {
