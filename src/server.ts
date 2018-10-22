@@ -59,7 +59,7 @@ const app = express();
 //   graphiql: true
 // }));
 
-app.use((req: express.Request, res: express.Response) => {
+app.get('*', (req: express.Request, res: express.Response) => {
   res.send("Under Construction");
 });
 
