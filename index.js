@@ -8,7 +8,7 @@ const app = new express();
 
 app.use('/graphql', expressGraphQL({
   schema,
-  graphiql: true
+  graphiql: true,
 }));
 
 app.listen(port, function() {
