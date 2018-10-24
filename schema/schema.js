@@ -10,6 +10,8 @@ const _ = require('lodash');
 
 const data = require('./data');
 
+const ATTENDANCE_POINTS = 10;
+
 const UserType = new GraphQLObjectType({
   name: 'User',
   fields: () => ({
@@ -23,7 +25,7 @@ const UserType = new GraphQLObjectType({
         return _.reduce(data.rewardHistory, (sum, rewardHistory) => {
           return sum +
             (rewardHistory.userId == parent.id
-              ? (rewardHistory.type == 'attendance' ? 10
+              ? (rewardHistory.type == 'attendance' ? ATTENDANCE_POINTS
               : -_.find(data.rewards, {id: rewardHistory.rewardId}).cost) : 0);
         }, 0);
       },
@@ -47,7 +49,7 @@ const RewardHistoryType = new GraphQLObjectType({
     points: {
       type: GraphQLInt,
       resolve(parent, args) {
-        return (parent.type == 'attendance' ? 10
+        return (parent.type == 'attendance' ? ATTENDANCE_POINTS
           : -_.find(data.rewards, {id: parent.rewardId}).cost);
       },
     },
