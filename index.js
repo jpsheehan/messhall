@@ -2,6 +2,7 @@ const Express = require('express');
 const expressGraphQL = require('express-graphql');
 const schema = require('./schema/schema');
 const {Connection} = require('tedious');
+const Database = require('./Database');
 require('dotenv').config();
 
 const port = process.env.PORT || process.env.DEFAULT_PORT;
@@ -13,6 +14,7 @@ const dbConfig = {
   options: {
     database: process.env.DB_NAME,
     encrypt: true,
+    rowCollectionOnRequestCompletion: true,
   },
 };
 
@@ -24,7 +26,7 @@ app.use('/graphql', expressGraphQL({
   schema,
   graphiql: true,
   context: {
-    db: dbConnection,
+    db: new Database(dbConnection),
   },
 }));
 
@@ -41,3 +43,5 @@ dbConnection.on('connect', (err) => {
     });
   }
 });
+
+console.log('Connecting to database...');
