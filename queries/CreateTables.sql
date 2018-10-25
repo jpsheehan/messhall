@@ -7,7 +7,7 @@ CREATE TABLE rewards (
 CREATE TABLE inventory (
 	id INT PRIMARY KEY,
 	reward_id INT NOT NULL FOREIGN KEY REFERENCES rewards(id),
-	time DATETIME NOT NULL DEFAULT (getdate()),
+	time DATETIME DEFAULT (getdate()),
 	quantity INT NOT NULL,
 );
 
@@ -17,11 +17,12 @@ CREATE TABLE users (
 	first_name VARCHAR NOT NULL,
 	last_name VARCHAR NOT NULL,
 	email VARCHAR NOT NULL,
+	hash CHAR(60) NOT NULL,
 );
 
 CREATE TABLE reward_history (
 	id INT PRIMARY KEY,
-	time DATETIME NOT NULL DEFAULT (getdate()),
+	time DATETIME DEFAULT (getdate()),
 	user_id INT NOT NULL FOREIGN KEY REFERENCES users(id),
 	reward_id INT NULL FOREIGN KEY REFERENCES rewards(id),
 );
