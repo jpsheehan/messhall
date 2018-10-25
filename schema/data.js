@@ -1,16 +1,16 @@
 module.exports = {
   users: [
     {
-      id: '1', role: 'user', name: 'Jesse',
-      email: 'jesse@example.com',
+      id: '1', role: 'user', firstName: 'Jesse', lastName: 'Example',
+      email: 'jesse@example.com', hash: '12345',
     },
     {
-      id: '2', role: 'user', name: 'Patrick',
-      email: 'patrick@example.com',
+      id: '2', role: 'user', firstName: 'Patrick', lastName: 'Example',
+      email: 'patrick@example.com', hash: '12345',
     },
     {
-      id: '3', role: 'user', name: 'Jay',
-      email: 'jay@example.com',
+      id: '3', role: 'user', firstName: 'Jay', lastName: 'Example',
+      email: 'jay@example.com', hash: '12345',
     },
   ],
   rewardHistory: [

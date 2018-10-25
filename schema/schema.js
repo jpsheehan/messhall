@@ -17,11 +17,12 @@ const UserType = new GraphQLObjectType({
   fields: () => ({
     id: {type: GraphQLID},
     role: {type: GraphQLString},
-    name: {type: GraphQLString},
+    firstName: {type: GraphQLString},
+    lastName: {type: GraphQLString},
     email: {type: GraphQLString},
     points: {
       type: GraphQLInt,
-      resolve(parent, args) {
+      resolve(parent, args, ctx) {
         return _.reduce(data.rewardHistory, (sum, rewardHistory) => {
           return sum +
             (rewardHistory.userId == parent.id
@@ -32,7 +33,7 @@ const UserType = new GraphQLObjectType({
     },
     rewardHistories: {
       type: new GraphQLList(RewardHistoryType),
-      resolve(parent, args) {
+      resolve(parent, args, ctx) {
         return _.filter(data.rewardHistory, (reward) => {
           return reward.userId == parent.id;
         });
@@ -48,7 +49,7 @@ const RewardHistoryType = new GraphQLObjectType({
     date: {type: GraphQLString},
     points: {
       type: GraphQLInt,
-      resolve(parent, args) {
+      resolve(parent, args, ctx) {
         return (parent.type == 'attendance' ? ATTENDANCE_POINTS
           : -_.find(data.rewards, {id: parent.rewardId}).cost);
       },
@@ -56,13 +57,13 @@ const RewardHistoryType = new GraphQLObjectType({
     type: {type: GraphQLString},
     reward: {
       type: RewardType,
-      resolve(parent, args) {
+      resolve(parent, args, ctx) {
         return _.find(data.rewards, {id: parent.rewardId});
       },
     },
     user: {
       type: UserType,
-      resolve(parent, args) {
+      resolve(parent, args, ctx) {
         return _.find(data.users, {id: parent.userId});
       },
     },
@@ -77,7 +78,7 @@ const RewardType = new GraphQLObjectType({
     cost: {type: GraphQLInt},
     stock: {
       type: GraphQLInt,
-      resolve(parent, args) {
+      resolve(parent, args, ctx) {
         return _.reduce(data.inventory, (sum, inventory) => {
           return sum +
             (inventory.rewardId == parent.id ? inventory.quantity : 0);
@@ -88,7 +89,7 @@ const RewardType = new GraphQLObjectType({
     },
     redemptions: { // redemptions
       type: new GraphQLList(RewardHistoryType),
-      resolve(parent, args) {
+      resolve(parent, args, ctx) {
         return _.filter(data.rewardHistory, (rewardHistory) => {
           return (rewardHistory.rewardId == parent.id);
         });
@@ -96,7 +97,7 @@ const RewardType = new GraphQLObjectType({
     },
     inventory: {
       type: new GraphQLList(InventoryType),
-      resolve(parent, args) {
+      resolve(parent, args, ctx) {
         return _.filter(data.inventory, (inventory) => {
           return inventory.rewardId == parent.id;
         });
@@ -120,39 +121,39 @@ const RootQuery = new GraphQLObjectType({
     user: {
       type: UserType,
       args: {id: {type: GraphQLID}},
-      resolve(parent, args) {
+      resolve(parent, args, ctx) {
         return _.find(data.users, {id: args.id});
       },
     },
     users: {
       type: new GraphQLList(UserType),
-      resolve(parent, args) {
+      resolve(parent, args, ctx) {
         return data.users;
       },
     },
     rewardHistory: {
       type: RewardHistoryType,
       args: {id: {type: GraphQLID}},
-      resolve(parent, args) {
+      resolve(parent, args, ctx) {
         return _.find(data.rewardHistory, {id: args.id});
       },
     },
     rewardHistories: {
       type: new GraphQLList(RewardHistoryType),
-      resolve(parent, args) {
+      resolve(parent, args, ctx) {
         return data.rewardHistory;
       },
     },
     reward: {
       type: RewardType,
       args: {id: {type: GraphQLID}},
-      resolve(parent, args) {
+      resolve(parent, args, ctx) {
         return _.find(data.rewards, {id: args.id});
       },
     },
     rewards: {
       type: new GraphQLList(RewardType),
-      resolve(parent, args) {
+      resolve(parent, args, ctx) {
         return data.rewards;
       },
     },

@@ -35,14 +35,9 @@ dbConnection.on('connect', (err) => {
     dbConnection.close();
   } else {
     console.log('Connected to database.');
-    addDummyData(dbConnection);
     app.listen(port, function() {
       console.log(`Express: http://localhost:${port}/`);
       console.log(`GraphQL: http://localhost:${port}/graphql`);
     });
   }
 });
-
-const addDummyData = (db) => {
-  // const request = new Request(`CREATE TABLE inventory (id int PRIMARY KEY, )`);
-};
