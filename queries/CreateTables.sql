@@ -1,28 +1,28 @@
 CREATE TABLE rewards (
-	id INT PRIMARY KEY,
-	name VARCHAR NOT NULL,
+	id INT IDENTITY(1,1) PRIMARY KEY,
+	name VARCHAR(32) NOT NULL,
 	cost INT NOT NULL,
 );
 
 CREATE TABLE inventory (
-	id INT PRIMARY KEY,
+	id INT IDENTITY(1,1) PRIMARY KEY,
 	reward_id INT NOT NULL FOREIGN KEY REFERENCES rewards(id),
 	time DATETIME DEFAULT (getdate()),
 	quantity INT NOT NULL,
 );
 
 CREATE TABLE users (
-	id INT PRIMARY KEY,
-	role INT NOT NULL DEFAULT (3),
-	first_name VARCHAR NOT NULL,
-	last_name VARCHAR NOT NULL,
-	email VARCHAR NOT NULL,
+	id INT IDENTITY(1,1) PRIMARY KEY,
+	role INT DEFAULT (3),
+	first_name VARCHAR(32) NOT NULL,
+	last_name VARCHAR(32) NOT NULL,
+	email VARCHAR(64) NOT NULL,
 	hash CHAR(60) NOT NULL,
 );
 
 CREATE TABLE reward_history (
-	id INT PRIMARY KEY,
+	id INT IDENTITY(1,1) PRIMARY KEY,
 	time DATETIME DEFAULT (getdate()),
 	user_id INT NOT NULL FOREIGN KEY REFERENCES users(id),
-	reward_id INT NULL FOREIGN KEY REFERENCES rewards(id),
+	reward_id INT FOREIGN KEY REFERENCES rewards(id),
 );
