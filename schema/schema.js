@@ -64,7 +64,7 @@ const RewardHistoryType = new GraphQLObjectType({
 
           return new Promise((resolve, reject) => {
 
-            db.queryOne(queries.singleReward, {id: parent.rewardId})
+            db.queryOne(queries.singleReward, {id: parent.reward_id})
                 .then((reward) => {
 
                   resolve(-reward.cost);
@@ -82,7 +82,16 @@ const RewardHistoryType = new GraphQLObjectType({
       type: RewardType,
       resolve(parent, args, {db}) {
 
-        return db.queryOne(queries.singleReward, {id: parent.rewardId});
+        // parent.reward_id may be null
+        if (parent.reward_id) {
+
+          return db.queryOne(queries.singleReward, {id: parent.reward_id});
+
+        } else {
+
+          return {};
+
+        }
 
       },
     },
@@ -90,7 +99,7 @@ const RewardHistoryType = new GraphQLObjectType({
       type: UserType,
       resolve(parent, args, {db}) {
 
-        return db.queryOne(queries.singleUser, {id: parent.userId});
+        return db.queryOne(queries.singleUser, {id: parent.user_id});
 
       },
     },

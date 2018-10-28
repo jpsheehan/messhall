@@ -98,8 +98,8 @@ class Database {
 
             if (!type) {
 
-              console.warn(`cannot determine type of argument '${key}'` +
-                ` with value ${value}, skipping`);
+              console.warn(`WARNING: cannot determine type of argument '${key}'`
+              + ` with value ${value}, while processing '${sql}', skipping`);
               continue;
 
             }
