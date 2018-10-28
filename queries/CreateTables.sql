@@ -14,8 +14,8 @@ CREATE TABLE inventory (
 CREATE TABLE users (
 	id INT IDENTITY(1,1) PRIMARY KEY,
 	role INT DEFAULT (3),
-	first_name VARCHAR(32) NOT NULL,
-	last_name VARCHAR(32) NOT NULL,
+	firstName VARCHAR(32) NOT NULL,
+	lastName VARCHAR(32) NOT NULL,
 	email VARCHAR(64) NOT NULL,
 	hash CHAR(60) NOT NULL,
 );

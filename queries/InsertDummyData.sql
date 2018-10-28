@@ -11,7 +11,7 @@ INSERT INTO dbo.inventory (reward_id, quantity) VALUES
 	(3, 24),
 	(4, 6);
 
-INSERT INTO dbo.users (first_name, last_name, role, email, hash) VALUES
+INSERT INTO dbo.users (firstName, lastName, role, email, hash) VALUES
   ('Jesse', 'Example', 3, 'jesse@example.com', '12345'),
   ('Jay', 'Example', 3, 'jay@example.com', '12345'),
   ('Patrick', 'Example', 3, 'patrick@example.com', '12345');
