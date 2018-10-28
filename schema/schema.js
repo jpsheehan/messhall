@@ -1,5 +1,4 @@
 const {
-  GraphQLID,
   GraphQLString,
   GraphQLInt,
   GraphQLSchema,
@@ -15,7 +14,7 @@ const ATTENDANCE_POINTS = 10;
 const UserType = new GraphQLObjectType({
   name: 'User',
   fields: () => ({
-    id: {type: GraphQLID},
+    id: {type: GraphQLInt},
     role: {type: GraphQLString},
     firstName: {type: GraphQLString},
     lastName: {type: GraphQLString},
@@ -56,7 +55,7 @@ const UserType = new GraphQLObjectType({
 const RewardHistoryType = new GraphQLObjectType({
   name: 'RewardHistory',
   fields: () => ({
-    id: {type: GraphQLID},
+    id: {type: GraphQLInt},
     date: {type: GraphQLString},
     points: {
       type: GraphQLInt,
@@ -90,7 +89,7 @@ const RewardHistoryType = new GraphQLObjectType({
 const RewardType = new GraphQLObjectType({
   name: 'Reward',
   fields: () => ({
-    id: {type: GraphQLID},
+    id: {type: GraphQLInt},
     name: {type: GraphQLString},
     cost: {type: GraphQLInt},
     stock: {
@@ -140,7 +139,7 @@ const RewardType = new GraphQLObjectType({
 const InventoryType = new GraphQLObjectType({
   name: 'Inventory',
   fields: () => ({
-    id: {type: GraphQLID},
+    id: {type: GraphQLInt},
     date: {type: GraphQLString},
     quantity: {type: GraphQLInt},
   }),
@@ -151,7 +150,7 @@ const RootQuery = new GraphQLObjectType({
   fields: {
     user: {
       type: UserType,
-      args: {id: {type: GraphQLID}},
+      args: {id: {type: GraphQLInt}},
       resolve(parent, args, ctx) {
 
         return _.find(data.users, {id: args.id});
@@ -168,7 +167,7 @@ const RootQuery = new GraphQLObjectType({
     },
     rewardHistory: {
       type: RewardHistoryType,
-      args: {id: {type: GraphQLID}},
+      args: {id: {type: GraphQLInt}},
       resolve(parent, args, ctx) {
 
         return _.find(data.rewardHistory, {id: args.id});
@@ -185,7 +184,7 @@ const RootQuery = new GraphQLObjectType({
     },
     reward: {
       type: RewardType,
-      args: {id: {type: GraphQLID}},
+      args: {id: {type: GraphQLInt}},
       resolve(parent, args, {db}) {
 
         return db.queryOne(`SELECT * FROM dbo.rewards WHERE id = @id`,
