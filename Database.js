@@ -52,7 +52,6 @@ class Database {
 
           // map the raw rows into an object that graphql can understand
           const objs = this.mapRowsToObj(rows);
-          console.log(objs);
           if (request.isSingleton) {
 
             resolve(objs[0]);
