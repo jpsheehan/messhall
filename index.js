@@ -1,7 +1,6 @@
 const Express = require('express');
 const expressGraphQL = require('express-graphql');
 const schema = require('./schema/schema');
-const {Connection} = require('tedious');
 const Database = require('./Database');
 require('dotenv').config();
 
@@ -18,30 +17,37 @@ const dbConfig = {
   },
 };
 
-const dbConnection = new Connection(dbConfig);
-
 const app = new Express();
+const db = new Database(dbConfig);
 
 app.use('/graphql', expressGraphQL({
   schema,
   graphiql: true,
   context: {
-    db: new Database(dbConnection),
+    db: db,
   },
 }));
 
-dbConnection.on('connect', (err) => {
+db.ready((err) => {
+
   if (err) {
+
     console.log('Could not connect to database.');
     console.log(err);
-    dbConnection.close();
+    db.close();
+
   } else {
+
     console.log('Connected to database.');
     app.listen(port, function() {
+
       console.log(`Express: http://localhost:${port}/`);
       console.log(`GraphQL: http://localhost:${port}/graphql`);
+
     });
+
   }
+
 });
 
 console.log('Connecting to database...');

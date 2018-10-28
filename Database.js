@@ -1,4 +1,4 @@
-const {Request, TYPES} = require('tedious');
+const {Connection, Request, TYPES} = require('tedious');
 
 /**
  * Database
@@ -6,11 +6,11 @@ const {Request, TYPES} = require('tedious');
 class Database {
   /**
    * Creates a new instance of Database.
-   * @param {*} database The database connection object.
+   * @param {Object} config The database connection object.
    */
-  constructor(database) {
+  constructor(config) {
 
-    this.db = database;
+    this.db = new Connection(config);
 
   }
 
@@ -144,6 +144,29 @@ class Database {
 
     });
     return objs;
+
+  }
+
+  /**
+   * Takes a callback that is executed when the database is ready to receive
+   * commands.
+   * @param {Function} callback The function to be called when the database is
+   * ready.
+   * @return {Database} Returns this instance for chaining.
+   */
+  ready(callback) {
+
+    this.db.on('connect', callback);
+    return this;
+
+  }
+
+  /**
+   * Closes the database connection.
+   */
+  close() {
+
+    this.db.close();
 
   }
 
