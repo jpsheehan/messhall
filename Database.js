@@ -11,6 +11,22 @@ class Database {
   constructor(config) {
 
     this.db = new Connection(config);
+    this.queue = [];
+    this.processing = false;
+
+  }
+
+  /**
+   * Process the next request in the queue.
+   */
+  processQueue() {
+
+    if (!this.processing && this.queue.length > 0) {
+
+      this.processing = true;
+      this.db.execSql(this.queue.shift());
+
+    }
 
   }
 
@@ -26,9 +42,8 @@ class Database {
     return new Promise((resolve, reject) => {
 
       // construct the request
-      const request = new Request(sql, (err, rowCount, rows) => {
+      const request = new Request(sql, (err, _, rows) => {
 
-        // reject if we have an error
         if (err) {
 
           reject(err);
@@ -37,7 +52,8 @@ class Database {
 
           // map the raw rows into an object that graphql can understand
           const objs = this.mapRowsToObj(rows);
-          if (isSingleton) {
+          console.log(objs);
+          if (request.isSingleton) {
 
             resolve(objs[0]);
 
@@ -50,6 +66,9 @@ class Database {
         }
 
       });
+
+      this.queue.push(request);
+      request.isSingleton = isSingleton;
 
       // apply arguments to the request
       if (args) {
@@ -93,8 +112,17 @@ class Database {
 
       }
 
+      request.on('requestCompleted', () => {
+
+        this.processing = false;
+        this.processQueue();
+
+      });
+
+
       // execute the request
-      this.db.execSql(request);
+      this.queue.push(request);
+      this.processQueue();
 
     });
 

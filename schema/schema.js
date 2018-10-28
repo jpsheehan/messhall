@@ -5,9 +5,6 @@ const {
   GraphQLObjectType,
   GraphQLList,
 } = require('graphql');
-const _ = require('lodash');
-
-const data = require('./data');
 const queries = require('./queries');
 
 const ATTENDANCE_POINTS = 10;
@@ -24,27 +21,24 @@ const UserType = new GraphQLObjectType({
       type: GraphQLInt,
       resolve(parent, args, ctx) {
 
-        return _.reduce(data.rewardHistory, (sum, rewardHistory) => {
+        // return _.reduce(data.rewardHistory, (sum, rewardHistory) => {
 
-          return sum +
-            (rewardHistory.userId == parent.id
-              ? (rewardHistory.type == 'attendance' ? ATTENDANCE_POINTS
-              : -_.find(data.rewards, {id: rewardHistory.rewardId}).cost) : 0);
+        //   return sum +
+        //     (rewardHistory.userId == parent.id
+        //       ? (rewardHistory.type == 'attendance' ? ATTENDANCE_POINTS
+        //       : -_.find(data.rewards, {id: rewardHistory.rewardId}).cost) : 0);
 
-        }, 0);
+        // }, 0);
 
       },
 
     },
     rewardHistories: {
       type: new GraphQLList(RewardHistoryType),
-      resolve(parent, args, ctx) {
+      resolve(parent, args, {db}) {
 
-        return _.filter(data.rewardHistory, (reward) => {
-
-          return reward.userId == parent.id;
-
-        });
+        return db.queryMany(queries.allRewardHistoriesByUser,
+            {userId: parent.id});
 
       },
 
@@ -60,27 +54,43 @@ const RewardHistoryType = new GraphQLObjectType({
     date: {type: GraphQLString},
     points: {
       type: GraphQLInt,
-      resolve(parent, args, ctx) {
+      resolve(parent, args, {db}) {
 
-        return (parent.type == 'attendance' ? ATTENDANCE_POINTS
-          : -_.find(data.rewards, {id: parent.rewardId}).cost);
+        if (parent.type == 'attendance') {
+
+          return ATTENDANCE_POINTS;
+
+        } else {
+
+          return new Promise((resolve, reject) => {
+
+            db.queryOne(queries.singleReward, {id: parent.rewardId})
+                .then((reward) => {
+
+                  resolve(-reward.cost);
+
+                });
+
+          });
+
+        }
 
       },
     },
     type: {type: GraphQLString},
     reward: {
       type: RewardType,
-      resolve(parent, args, ctx) {
+      resolve(parent, args, {db}) {
 
-        return _.find(data.rewards, {id: parent.rewardId});
+        return db.queryOne(queries.singleReward, {id: parent.rewardId});
 
       },
     },
     user: {
       type: UserType,
-      resolve(parent, args, ctx) {
+      resolve(parent, args, {db}) {
 
-        return _.find(data.users, {id: parent.userId});
+        return db.queryOne(queries.singleUser, {id: parent.userId});
 
       },
     },
@@ -97,40 +107,32 @@ const RewardType = new GraphQLObjectType({
       type: GraphQLInt,
       resolve(parent, args, ctx) {
 
-        return _.reduce(data.inventory, (sum, inventory) => {
+        // return _.reduce(data.inventory, (sum, inventory) => {
 
-          return sum +
-            (inventory.rewardId == parent.id ? inventory.quantity : 0);
+        //   return sum +
+        //     (inventory.rewardId == parent.id ? inventory.quantity : 0);
 
-        }, 0) - _.reduce(data.rewardHistory, (sum, rewardHistory) => {
+        // }, 0) - _.reduce(data.rewardHistory, (sum, rewardHistory) => {
 
-          return sum + (rewardHistory.rewardId == parent.id ? 1 : 0);
+        //   return sum + (rewardHistory.rewardId == parent.id ? 1 : 0);
 
-        }, 0);
+        // }, 0);
 
       },
     },
     redemptions: { // redemptions
       type: new GraphQLList(RewardHistoryType),
-      resolve(parent, args, ctx) {
+      resolve(parent, args, {db}) {
 
-        return _.filter(data.rewardHistory, (rewardHistory) => {
-
-          return (rewardHistory.rewardId == parent.id);
-
-        });
+        return db.queryMany(queries.rewardRedemptions, {rewardId: parent.id});
 
       },
     },
     inventory: {
       type: new GraphQLList(InventoryType),
-      resolve(parent, args, ctx) {
+      resolve(parent, args, {db}) {
 
-        return _.filter(data.inventory, (inventory) => {
-
-          return inventory.rewardId == parent.id;
-
-        });
+        return db.queryMany(queries.rewardInventory, {rewardId: parent.id});
 
       },
     },
@@ -152,34 +154,35 @@ const RootQuery = new GraphQLObjectType({
     user: {
       type: UserType,
       args: {id: {type: GraphQLInt}},
-      resolve(parent, args, ctx) {
+      resolve(parent, args, {db}) {
 
-        return _.find(data.users, {id: args.id});
+        return db.queryOne(queries.singleUser, {id: args.id});
 
       },
     },
     users: {
       type: new GraphQLList(UserType),
-      resolve(parent, args, ctx) {
+      resolve(parent, args, {db}) {
 
-        return data.users;
+        return db.queryMany(queries.allUsers);
 
       },
     },
     rewardHistory: {
       type: RewardHistoryType,
       args: {id: {type: GraphQLInt}},
-      resolve(parent, args, ctx) {
+      resolve(parent, args, {db}) {
 
-        return _.find(data.rewardHistory, {id: args.id});
+        return db.queryOne(queries.singleRewardHistory, {id: args.id});
 
       },
     },
     rewardHistories: {
       type: new GraphQLList(RewardHistoryType),
-      resolve(parent, args, ctx) {
+      resolve(parent, args, {db}) {
 
-        return data.rewardHistory;
+        return db.queryMany(queries.allRewardHistories);
+        // return data.rewardHistory;
 
       },
     },
