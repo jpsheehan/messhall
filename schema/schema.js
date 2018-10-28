@@ -8,6 +8,7 @@ const {
 const _ = require('lodash');
 
 const data = require('./data');
+const queries = require('./queries');
 
 const ATTENDANCE_POINTS = 10;
 
@@ -187,8 +188,7 @@ const RootQuery = new GraphQLObjectType({
       args: {id: {type: GraphQLInt}},
       resolve(parent, args, {db}) {
 
-        return db.queryOne(`SELECT * FROM dbo.rewards WHERE id = @id`,
-            {id: args.id});
+        return db.queryOne(queries.singleReward, {id: args.id});
 
       },
     },
@@ -196,7 +196,7 @@ const RootQuery = new GraphQLObjectType({
       type: new GraphQLList(RewardType),
       resolve(parent, args, {db}) {
 
-        return db.queryMany(`SELECT id, name, cost FROM dbo.rewards`);
+        return db.queryMany(queries.allRewards);
 
       },
 
