@@ -1,4 +1,4 @@
-const {Request} = require('tedious');
+const {Request, TYPES} = require('tedious');
 
 /**
  * Database
@@ -9,7 +9,9 @@ class Database {
    * @param {*} database The database connection object.
    */
   constructor(database) {
+
     this.db = database;
+
   }
 
   /**
@@ -20,22 +22,82 @@ class Database {
    * @return {Promise} The promise
    */
   query(sql, args, isSingleton) {
+
     return new Promise((resolve, reject) => {
+
+      // construct the request
       const request = new Request(sql, (err, rowCount, rows) => {
+
+        // reject if we have an error
         if (err) {
+
           reject(err);
+
         } else {
+
+          // map the raw rows into an object that graphql can understand
           const objs = this.mapRowsToObj(rows);
-          if (typeof(isSingleton) != 'undefined' && isSingleton !== null
-            && isSingleton) {
+          if (isSingleton) {
+
             resolve(objs[0]);
+
           } else {
+
             resolve(objs);
+
           }
+
         }
+
       });
+
+      // apply arguments to the request
+      if (args) {
+
+        for (const key in args) {
+
+          if (args.hasOwnProperty(key)) {
+
+            const value = args[key];
+            let type = null;
+
+            switch (typeof(value)) {
+
+              case 'number':
+                type = TYPES.Int;
+                break;
+
+              case 'boolean':
+                type = TYPES.Boolean;
+                break;
+
+              case 'string':
+                type = TYPES.VarChar;
+                break;
+
+            }
+
+            if (!type) {
+
+              console.warn(`cannot determine type of argument '${key}'` +
+                ` with value ${value}, skipping`);
+              continue;
+
+            }
+
+            request.addParameter(key, type, value);
+
+          }
+
+        }
+
+      }
+
+      // execute the request
       this.db.execSql(request);
+
     });
+
   }
 
   /**
@@ -45,7 +107,9 @@ class Database {
    * @return {Promise}
    */
   queryOne(sql, args) {
+
     return this.query(sql, args, true);
+
   }
 
   /**
@@ -55,7 +119,9 @@ class Database {
    * @return {Promise}
    */
   queryMany(sql, args) {
+
     return this.query(sql, args, false);
+
   }
 
   /**
@@ -64,16 +130,23 @@ class Database {
    * @return {Array} An object containing all database rows.
    */
   mapRowsToObj(rows) {
+
     const objs = [];
     rows.forEach((row) => {
+
       const obj = {};
       row.forEach((dataRow) => {
+
         obj[dataRow.metadata.colName] = dataRow.value;
+
       });
       objs.push(obj);
+
     });
     return objs;
+
   }
+
 }
 
 module.exports = Database;
