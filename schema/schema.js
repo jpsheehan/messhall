@@ -148,18 +148,21 @@ const RootQuery = new GraphQLObjectType({
       type: RewardType,
       args: {id: {type: GraphQLID}},
       resolve(parent, args, {db}) {
-        // return _.find(data.rewards, {id: args.id});
-        console.log('Beginning query...');
-        // return {id: '1', name: 'THing', cost: 0};
-        return db.query(`SELECT * FROM dbo.rewards WHERE id = ${args.id}`);
+        return db.queryOne(`SELECT * FROM dbo.rewards WHERE id = ${args.id}`);
       },
     },
     rewards: {
       type: new GraphQLList(RewardType),
       resolve(parent, args, {db}) {
-        // return data.rewards;
-        console.log('cool');
-        return db.query(`SELECT * FROM dbo.rewards`);
+        return new Promise((resolve, reject) => {
+          db.queryMany(`SELECT id, name, cost FROM dbo.rewards`)
+              .then((rows) => {
+                resolve(rows);
+              })
+              .catch((err) => {
+                reject(err);
+              });
+        });
       },
     },
   },
