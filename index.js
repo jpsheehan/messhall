@@ -2,6 +2,7 @@ const Express = require('express');
 const expressGraphQL = require('express-graphql');
 const schema = require('./schema/schema');
 const Database = require('./Database');
+const cors = require('cors');
 require('dotenv').config();
 
 const port = process.env.PORT || process.env.DEFAULT_PORT;
@@ -20,7 +21,7 @@ const dbConfig = {
 const app = new Express();
 const db = new Database(dbConfig);
 
-app.use('/graphql', expressGraphQL({
+app.use('/graphql', cors(), expressGraphQL({
   schema,
   graphiql: true,
   context: {
