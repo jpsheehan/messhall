@@ -1,10 +1,10 @@
-const {
+import {
   GraphQLString,
   GraphQLInt,
   GraphQLSchema,
   GraphQLObjectType,
   GraphQLList,
-} = require('graphql');
+} from 'graphql';
 const queries = require('./queries');
 
 const ATTENDANCE_POINTS = 10;

@@ -1,8 +1,8 @@
-const Express = require('express');
-const expressGraphQL = require('express-graphql');
-const schema = require('./schema/schema');
-const Database = require('./Database');
-const cors = require('cors');
+import Express from 'express';
+import expressGraphQL from 'express-graphql';
+import schema from './schema/schema';
+import Database from './Database';
+import cors from 'cors';
 import {config} from 'dotenv';
 config();
 

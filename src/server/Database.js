@@ -1,4 +1,4 @@
-const {Connection, Request, TYPES} = require('tedious');
+import {Connection, Request, TYPES} from 'tedious';
 
 /**
  * Database
