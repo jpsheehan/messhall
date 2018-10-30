@@ -1,10 +1,12 @@
 import Express from 'express';
 import expressGraphQL from 'express-graphql';
+import cors from 'cors';
+import dotenv from 'dotenv';
+
 import schema from './schema/schema';
 import Database from './Database';
-import cors from 'cors';
-import {config} from 'dotenv';
-config();
+
+dotenv.config();
 
 const port = process.env.PORT || process.env.DEFAULT_PORT;
 
