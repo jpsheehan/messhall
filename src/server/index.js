@@ -3,7 +3,8 @@ const expressGraphQL = require('express-graphql');
 const schema = require('./schema/schema');
 const Database = require('./Database');
 const cors = require('cors');
-require('dotenv').config();
+import {config} from 'dotenv';
+config();
 
 const port = process.env.PORT || process.env.DEFAULT_PORT;
 
