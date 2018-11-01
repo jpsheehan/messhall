@@ -1,0 +1,32 @@
+export default {
+  admin: [
+    'user:create',
+    'user:update',
+    'user:delete',
+    'user:view',
+    'user:view:all',
+    'token:create',
+    'token:delete',
+    'token:view',
+    'token:view:all',
+    'user:view:self',
+    'token:create:self',
+    'token:update:self',
+    'token:delete:self',
+    'token:view:self',
+  ],
+  manager: [
+    'user:view:self',
+    'token:create:self',
+    'token:update:self',
+    'token:delete:self',
+    'token:view:self',
+  ],
+  user: [
+    'user:view:self',
+    'token:create:self',
+    'token:update:self',
+    'token:delete:self',
+    'token:view:self',
+  ],
+};
