@@ -1,4 +1,4 @@
-import omit from 'lodash.omit';
+import {omit} from 'lodash';
 import bcrypt from 'bcryptjs';
 import {INTEGER, STRING, ENUM} from 'sequelize/lib/data-types';
 
@@ -71,8 +71,10 @@ function createUserModel(sequelize, hashMethod) {
       type: STRING,
       allowNull: false,
       validate: {
-        min: 8,
-        max: 128,
+        len: {
+          args: [8, 32],
+          msg: 'Password too short',
+        },
       },
     },
     role: {
