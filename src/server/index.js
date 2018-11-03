@@ -1,4 +1,4 @@
-import _ from 'babel-polyfill';
+import 'babel-polyfill';
 
 import Express from 'express';
 import expressGraphQL from 'express-graphql';
@@ -50,6 +50,7 @@ app.use('/graphql',
 
       return {
         schema: executableSchema,
+        graphiql: true,
         pretty: true,
         context: {
           models: request.orm,
@@ -63,4 +64,8 @@ app.use('/graphql',
 
     }));
 
-app.listen(port);
+app.listen(port, () => {
+
+  console.log(`Listening on port ${port}...`);
+
+});
