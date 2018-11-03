@@ -2,6 +2,7 @@ import bcrypt from 'bcryptjs';
 
 import createUserModel from './user';
 import createTokenModel from './token';
+import createRewardModel from './reward';
 
 /**
  * Hashes the password.
@@ -45,6 +46,7 @@ export default (sequelize) => {
 
   const User = createUserModel(sequelize, hash);
   const Token = createTokenModel(sequelize, hash);
+  const Reward = createRewardModel(sequelize);
 
   // build model associations
   User.hasMany(Token, {as: 'tokens'});
@@ -73,11 +75,24 @@ export default (sequelize) => {
       password: '1234512345',
     });
 
+    Reward.create({
+      name: 'Cadbury Dairy Milk',
+      cost: 10,
+    });
+    Reward.create({
+      name: 'Cadbury Crunchie',
+      cost: 10,
+    });
+    Reward.create({
+      name: 'Coca Cola 330mL',
+      cost: 15,
+    });
+
   });
 
   return function orm(request, response, next) {
 
-    request.orm = {User, Token};
+    request.orm = {User, Token, Reward};
     next();
 
   };
