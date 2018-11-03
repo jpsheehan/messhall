@@ -14,6 +14,11 @@ export default {
     'token:update:self',
     'token:delete:self',
     'token:view:self',
+    'reward:view',
+    'reward:view:all',
+    'reward:create',
+    'reward:delete',
+    'reward:update',
   ],
   manager: [
     'user:view:self',
@@ -21,6 +26,11 @@ export default {
     'token:update:self',
     'token:delete:self',
     'token:view:self',
+    'reward:view',
+    'reward:view:all',
+    'reward:create',
+    'reward:delete',
+    'reward:update',
   ],
   user: [
     'user:view:self',
@@ -28,5 +38,7 @@ export default {
     'token:update:self',
     'token:delete:self',
     'token:view:self',
+    'reward:view',
+    'reward:view:all',
   ],
 };

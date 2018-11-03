@@ -54,6 +54,23 @@ export default {
 
     },
   },
+  Reward: {
+    async stock(root, args, context) {
+
+      try {
+
+        const {Reward} = context.models;
+        const reward = await Reward.findById(root.id);
+        return reward;
+
+      } catch (err) {
+
+        return err;
+
+      }
+
+    },
+  },
   Query: {
     users: withAuth(['user:view:all'], async (_, args, context) => {
 
@@ -108,5 +125,34 @@ export default {
 
     }),
 
+    rewards: withAuth((_, args, context) => {
+
+      try {
+
+        const {Reward} = context.models;
+        return Reward.findAll();
+
+      } catch (err) {
+
+        return err;
+
+      }
+
+    }),
+
+    reward: withAuth((_, args, context) => {
+
+      try {
+
+        const {Reward} = context.models;
+        return Reward.findById(args.id);
+
+      } catch (err) {
+
+        return err;
+
+      }
+
+    }),
   },
 };
