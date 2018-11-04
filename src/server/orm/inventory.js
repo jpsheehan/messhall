@@ -11,7 +11,7 @@ function createInventoryModel(sequelize) {
     id: {
       primaryKey: true,
       type: INTEGER,
-      autoincrement: true,
+      autoIncrement: true,
     },
     date: {
       type: DATE,

@@ -11,7 +11,7 @@ function createRewardModel(sequelize) {
     id: {
       primaryKey: true,
       type: INTEGER,
-      autoincrement: true,
+      autoIncrement: true,
     },
     name: {
       type: STRING,
