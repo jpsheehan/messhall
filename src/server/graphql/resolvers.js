@@ -155,4 +155,113 @@ export default {
 
     }),
   },
+  Mutation: {
+    async logIn(_, args, context) {
+
+      const {input: {name, password}} = args;
+      const {User, Token} = context.models;
+
+      try {
+
+        const user = await User.authenticate(name, password);
+        const token = await Token.tokenize(user);
+        return {user, token};
+
+      } catch (err) {
+
+        return err;
+
+      }
+
+    },
+
+    createUser: withAuth(['user:create'], async (_, args, context) => {
+
+      try {
+
+        const {User} = context.models;
+        const user = await User.create(args.input);
+        return {user};
+
+      } catch (err) {
+
+        return err;
+
+      }
+
+    }),
+
+    updateUser: withAuth((_, args, context) => {
+
+      return context.user.get('id') !== args.id
+          ? ['user:update']
+          : ['user:update:self'];
+
+    }, async (_, args, context) => {
+
+      try {
+
+        const {User} = context.models;
+        const user = await User.findById(args.input.id);
+        await user.update(args.input.patch);
+        return {user};
+
+      } catch (err) {
+
+        return err;
+
+      }
+
+    }),
+
+    deleteUser: withAuth((_, args, context) => {
+
+      return context.user.get('id') !== args.id
+          ? ['user:delete']
+          : ['user:delete:self'];
+
+    }, async (_, args, context) => {
+
+      try {
+
+        const {User} = context.models;
+        const user = await User.findById(args.input.id);
+        await user.destroy();
+        return {user};
+
+      } catch (err) {
+
+        return err;
+
+      }
+
+    }),
+
+    deleteToken: withAuth((_, args, context) => {
+
+      return context.user.get('id') !== args.id
+          ? ['token:delete']
+          : ['token:delete:self'];
+
+    }, async (_, args, context) => {
+
+      try {
+
+        const {User, Token} = context.models;
+        const token = await Token.findById(args.input.id, {include: [User]});
+        if (!token) {
+
+          await token.destroy();
+
+        }
+        return {token};
+
+      } catch (err) {
+
+        return err;
+
+      }
+
+    }),
+  },
 };
