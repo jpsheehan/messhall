@@ -3,6 +3,7 @@ import bcrypt from 'bcryptjs';
 import createUserModel from './user';
 import createTokenModel from './token';
 import createRewardModel from './reward';
+import createInventoryModel from './inventory';
 
 /**
  * Hashes the password.
@@ -47,15 +48,22 @@ export default (sequelize) => {
   const User = createUserModel(sequelize, hash);
   const Token = createTokenModel(sequelize, hash);
   const Reward = createRewardModel(sequelize);
+  const Inventory = createInventoryModel(sequelize);
 
   // build model associations
   User.hasMany(Token, {as: 'tokens'});
   Token.belongsTo(User);
+
+  Reward.hasMany(Inventory, {as: 'inventory'});
+  Inventory.belongsTo(Reward);
+
+  // Sync and create some default data
   sequelize.sync().then(() => {
 
     User.findOrCreate({
       where: {email: 'jesse@example.com'},
       defaults: {
+        email: 'jesse@example.com',
         firstName: 'Jesse',
         lastName: 'Example',
         role: 'admin',
@@ -65,6 +73,7 @@ export default (sequelize) => {
     User.findOrCreate({
       where: {email: 'patrick@example.com'},
       defaults: {
+        email: 'patrick@example.com',
         firstName: 'Patrick',
         lastName: 'Example',
         role: 'manager',
@@ -74,6 +83,7 @@ export default (sequelize) => {
     User.findOrCreate({
       where: {email: 'jay@example.com'},
       defaults: {
+        email: 'jay@example.com',
         firstName: 'Jay',
         lastName: 'Example',
         role: 'user',
@@ -84,27 +94,30 @@ export default (sequelize) => {
     Reward.findOrCreate({
       where: {name: 'Cadbury Dairy Milk'},
       defaults: {
+        name: 'Cadbury Dairy Milk',
         cost: 10,
       },
     });
     Reward.findOrCreate({
       where: {name: 'Cadbury Crunchy'},
       defaults: {
+        name: 'Cadbury Crunchy',
         cost: 10,
       },
     });
     Reward.findOrCreate({
       where: {name: 'Coca Cola 330mL'},
       defaults: {
+        name: 'Coca Cola 330mL',
         cost: 10,
       },
     });
 
   });
 
-  return function orm(request, response, next) {
+  return function orm(request, _, next) {
 
-    request.orm = {User, Token, Reward};
+    request.orm = {User, Token, Reward, Inventory};
     next();
 
   };
