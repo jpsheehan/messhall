@@ -4,6 +4,7 @@ import createUserModel from './user';
 import createTokenModel from './token';
 import createRewardModel from './reward';
 import createInventoryModel from './inventory';
+import createHistoryModel from './history';
 
 /**
  * Hashes the password.
@@ -49,6 +50,7 @@ export default (sequelize) => {
   const Token = createTokenModel(sequelize, hash);
   const Reward = createRewardModel(sequelize);
   const Inventory = createInventoryModel(sequelize);
+  const History = createHistoryModel(sequelize);
 
   // build model associations
   User.hasMany(Token, {as: 'tokens'});
@@ -57,8 +59,11 @@ export default (sequelize) => {
   Reward.hasMany(Inventory, {as: 'inventory'});
   Inventory.belongsTo(Reward);
 
+  History.hasOne(Reward, {as: 'reward'});
+  Reward.belongsTo(History);
+
   // Sync and create some default data
-  sequelize.sync().then(() => {
+  sequelize.sync({force: true}).then(() => {
 
     User.findOrCreate({
       where: {email: 'jesse@example.com'},
@@ -117,7 +122,7 @@ export default (sequelize) => {
 
   return function orm(request, _, next) {
 
-    request.orm = {User, Token, Reward, Inventory};
+    request.orm = {User, Token, Reward, Inventory, History};
     next();
 
   };
