@@ -86,12 +86,13 @@ export default `
   }
 
   input LogIn {
-    name: String
+    email: String
     password: String
   }
 
   input CreateUser {
-    name: String
+    firstName: String
+    lastName: String
     email: String
     role: String
     password: String

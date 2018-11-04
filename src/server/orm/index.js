@@ -53,39 +53,51 @@ export default (sequelize) => {
   Token.belongsTo(User);
   sequelize.sync().then(() => {
 
-    User.create({
-      firstName: 'Jesse',
-      lastName: 'Example',
-      email: 'jesse@example.com',
-      role: 'admin',
-      password: '1234512345',
+    User.findOrCreate({
+      where: {email: 'jesse@example.com'},
+      defaults: {
+        firstName: 'Jesse',
+        lastName: 'Example',
+        role: 'admin',
+        password: '1234512345',
+      },
     });
-    User.create({
-      firstName: 'Patrick',
-      lastName: 'Example',
-      email: 'patrick@example.com',
-      role: 'manager',
-      password: '1234512345',
+    User.findOrCreate({
+      where: {email: 'patrick@example.com'},
+      defaults: {
+        firstName: 'Patrick',
+        lastName: 'Example',
+        role: 'manager',
+        password: '1234512345',
+      },
     });
-    User.create({
-      firstName: 'Jay',
-      lastName: 'Example',
-      email: 'jay@example.com',
-      role: 'user',
-      password: '1234512345',
+    User.findOrCreate({
+      where: {email: 'jay@example.com'},
+      defaults: {
+        firstName: 'Jay',
+        lastName: 'Example',
+        role: 'user',
+        password: '1234512345',
+      },
     });
 
-    Reward.create({
-      name: 'Cadbury Dairy Milk',
-      cost: 10,
+    Reward.findOrCreate({
+      where: {name: 'Cadbury Dairy Milk'},
+      defaults: {
+        cost: 10,
+      },
     });
-    Reward.create({
-      name: 'Cadbury Crunchie',
-      cost: 10,
+    Reward.findOrCreate({
+      where: {name: 'Cadbury Crunchy'},
+      defaults: {
+        cost: 10,
+      },
     });
-    Reward.create({
-      name: 'Coca Cola 330mL',
-      cost: 15,
+    Reward.findOrCreate({
+      where: {name: 'Coca Cola 330mL'},
+      defaults: {
+        cost: 10,
+      },
     });
 
   });

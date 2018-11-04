@@ -4,25 +4,6 @@ import jwt from 'jsonwebtoken';
 import scopes from './scopes';
 
 /**
- * An error for failed authentication.
- */
-class AuthenticationError extends Error {
-
-  /**
-   * Creates a new instance of AuthenticationError.
-   * @param {String} message The message to display.
-   */
-  constructor(message = 'Authentication failed!') {
-
-    super(message);
-    this.message = message;
-    this.name = 'AuthenticationError';
-
-  }
-
-}
-
-/**
  * Authenticates a request.
  * @param {express.Request} request The request instance.
  * @param {express.Response} _ The response instance.
@@ -31,7 +12,7 @@ class AuthenticationError extends Error {
 async function auth(request, _, next) {
 
   const {User, Token} = request.orm;
-  const authorization = request.get('authorization');
+  const authorization = request.get('Authorization');
 
   if (!authorization) {
 

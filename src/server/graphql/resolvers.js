@@ -158,12 +158,12 @@ export default {
   Mutation: {
     async logIn(_, args, context) {
 
-      const {input: {name, password}} = args;
+      const {input: {email, password}} = args;
       const {User, Token} = context.models;
 
       try {
 
-        const user = await User.authenticate(name, password);
+        const user = await User.authenticate(email, password);
         const token = await Token.tokenize(user);
         return {user, token};
 

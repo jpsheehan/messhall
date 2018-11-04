@@ -5,6 +5,25 @@ import {INTEGER, STRING, ENUM} from 'sequelize/lib/data-types';
 const THIRTY_DAYS_AGO = new Date(new Date() - 30 * 24 * 60 * 60 * 1000);
 
 /**
+ * An error for failed authentication.
+ */
+class AuthenticationError extends Error {
+
+  /**
+   * Creates a new instance of AuthenticationError.
+   * @param {String} message The message to display.
+   */
+  constructor(message = 'Authentication failed!') {
+
+    super(message);
+    this.message = message;
+    this.name = 'AuthenticationError';
+
+  }
+
+}
+
+/**
  * Compares the password to the actual password of the user.
  * @param {String} password The password to verify
  * @param {*} user The ORM user model.
@@ -130,16 +149,16 @@ function createUserModel(sequelize, hashMethod) {
 
   const User = sequelize.define('user', modelConfig, options);
 
-  User.authenticate = async function(name, password) {
+  User.authenticate = async function(email, password) {
 
-    if (!name || !password) {
+    if (!email || !password) {
 
-      return null;
+      throw new AuthenticationError('Invalid email or password.');
 
     }
 
-    // get user by name
-    const user = await this.findOne({where: {name}});
+    // get user by email
+    const user = await this.findOne({where: {email}});
     const isValidPassword = await comparePassword(password, user);
 
     if (user && isValidPassword) {
@@ -148,7 +167,7 @@ function createUserModel(sequelize, hashMethod) {
 
     } else {
 
-      return null;
+      throw new AuthenticationError('Invalid email or password.');
 
     }
 
