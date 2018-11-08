@@ -1,24 +1,5 @@
 import withAuth from 'graphql-auth';
 
-/**
- * The error to throw when an endpoint is not found
- */
-class NotFoundError extends Error {
-
-  /**
-   * Creates a new instance of NotFoundError
-   * @param {String} message The message to be shown with the error.
-   */
-  constructor(message = 'Not Found') {
-
-    super(message);
-    this.message = message;
-    this.name = 'NotFoundError';
-
-  }
-
-}
-
 export default {
   User: {
     async tokens(root, _, context) {
