@@ -92,7 +92,15 @@ app.use('/refresh', (req, res, next) => {
       lastName: 'Example',
       role: 'admin',
       password: '1234512345',
+    }).then((admin) => {
+
+      req.orm.Token.create({
+        uuid: 'a24ee637-b3dc-40bf-bcb8-5377efadd570',
+        userId: admin.get('id'),
+      });
+
     });
+
     req.orm.User.create({
       email: 'patrick@example.com',
       firstName: 'Patrick',

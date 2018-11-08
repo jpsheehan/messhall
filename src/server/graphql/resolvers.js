@@ -17,6 +17,41 @@ export default {
       }
 
     },
+    async history(root, args, context) {
+
+      try {
+
+        const {History} = context.models;
+        const histories = await History.findAll({where: {userId: root.id}});
+        return histories;
+
+      } catch (err) {
+
+        return err;
+
+      }
+
+    },
+    async points(root, args, context) {
+
+      try {
+
+        const {History} = context.models;
+        const histories = await History.findAll({where: {userId: root.id}});
+        const points = histories.reduce((sum, history) => {
+
+          return sum + history.get('points');
+
+        }, 0);
+        return points;
+
+      } catch (err) {
+
+        return err;
+
+      }
+
+    },
   },
   Token: {
     async user(root, _, context) {
