@@ -64,6 +64,54 @@ app.use('/graphql',
 
     }));
 
+// adds default data to the database
+app.use('/refresh', (req, res, next) => {
+
+  // Sync and create some default data
+  // the force option drops all the tables beforehand
+  sequelize.sync({force: true}).then(() => {
+
+    req.orm.User.create({
+      email: 'jesse@example.com',
+      firstName: 'Jesse',
+      lastName: 'Example',
+      role: 'admin',
+      password: '1234512345',
+    });
+    req.orm.User.create({
+      email: 'patrick@example.com',
+      firstName: 'Patrick',
+      lastName: 'Example',
+      role: 'manager',
+      password: '1234512345',
+    });
+    req.orm.User.create({
+      email: 'jay@example.com',
+      firstName: 'Jay',
+      lastName: 'Example',
+      role: 'user',
+      password: '1234512345',
+    });
+
+    req.orm.Reward.create({
+      name: 'Cadbury Dairy Milk',
+      cost: 10,
+    });
+    req.orm.Reward.create({
+      name: 'Cadbury Crunchy',
+      cost: 10,
+    });
+    req.orm.Reward.create({
+      name: 'Coca Cola Can',
+      cost: 10,
+    });
+
+  });
+
+  res.send('Refreshed the database');
+
+});
+
 process.on('SIGINT', () => {
 
   console.log('Shutting down gracefully...');
@@ -74,6 +122,6 @@ process.on('SIGINT', () => {
 
 app.listen(port, () => {
 
-  console.log(`Listening on port ${port}...`);
+  console.log(`Listening on http://127.0.0.1:${port}/graphql...`);
 
 });

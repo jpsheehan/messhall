@@ -63,44 +63,9 @@ export default (sequelize) => {
   History.hasOne(Reward, {as: 'reward'});
   Reward.belongsTo(History);
 
-  // Sync and create some default data
-  // the force option drops all the tables beforehand
-  sequelize.sync({force: true}).then(() => {
+  sequelize.sync().then(() => {
 
-    User.create({
-      email: 'jesse@example.com',
-      firstName: 'Jesse',
-      lastName: 'Example',
-      role: 'admin',
-      password: '1234512345',
-    });
-    User.create({
-      email: 'patrick@example.com',
-      firstName: 'Patrick',
-      lastName: 'Example',
-      role: 'manager',
-      password: '1234512345',
-    });
-    User.create({
-      email: 'jay@example.com',
-      firstName: 'Jay',
-      lastName: 'Example',
-      role: 'user',
-      password: '1234512345',
-    });
-
-    Reward.create({
-      name: 'Cadbury Dairy Milk',
-      cost: 10,
-    });
-    Reward.create({
-      name: 'Cadbury Crunchy',
-      cost: 10,
-    });
-    Reward.create({
-      name: 'Coca Cola Can',
-      cost: 10,
-    });
+    console.log('Database Ready');
 
   });
 
