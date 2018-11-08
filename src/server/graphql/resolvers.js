@@ -40,9 +40,42 @@ export default {
 
       try {
 
-        const {Reward} = context.models;
-        const reward = await Reward.findById(root.id);
-        return reward;
+        // const {Reward, Inventory} = context.models;
+        // const reward = await Reward.findByPk(root.id, {include: [Inventory], as: 'inventory'});
+
+        // console.log(reward.inventory);
+
+        return 0;
+
+      } catch (err) {
+
+        return err;
+
+      }
+
+    },
+    // async redemptions(root, args, context) {
+
+    //   try {
+
+    //     const {Reward} = context.models;
+    //     const reward = await Reward.findById(root.id);
+
+
+    //   } catch (err) {
+
+    //     return err;
+
+    //   }
+
+    // },
+    async inventory(root, args, context) {
+
+      try {
+
+        const {Inventory} = context.models;
+        const inventory = await Inventory.findAll({where: {rewardId: root.id}});
+        return inventory;
 
       } catch (err) {
 
