@@ -252,16 +252,11 @@ export default {
         if (token) {
 
           await token.destroy();
+          return {user: token.user};
 
         }
 
-        /* FIXME: Possible error here. GraphQL doesn't return the user object
-          as a part of the DeleteTokenPayload although it clearly exists.
-          
-          console.log({token});
-        */
-
-        return {token};
+        return null;
 
       } catch (err) {
 
