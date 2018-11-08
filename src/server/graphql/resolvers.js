@@ -130,16 +130,21 @@ export default {
     },
   },
   History: {
-    // async reward(root, args, context) {
+    async reward(root, args, context) {
 
-    //   try {
+      try {
 
-    //     const {Reward} = context.models;
-    //     const reward = await Reward.findAll({})
+        const {Reward, History} = context.models;
+        const history = await History.findByPk(root.id, {include: [Reward]});
+        return history.reward;
 
-    //   }
+      } catch (err) {
 
-    // }
+        return err;
+
+      }
+
+    },
     async user(root, args, context) {
 
       try {
