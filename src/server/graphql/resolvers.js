@@ -249,11 +249,18 @@ export default {
 
         const {User, Token} = context.models;
         const token = await Token.findById(args.input.id, {include: [User]});
-        if (!token) {
+        if (token) {
 
           await token.destroy();
 
         }
+
+        /* FIXME: Possible error here. GraphQL doesn't return the user object
+          as a part of the DeleteTokenPayload although it clearly exists.
+          
+          console.log({token});
+        */
+
         return {token};
 
       } catch (err) {
