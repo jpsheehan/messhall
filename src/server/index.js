@@ -7,6 +7,7 @@ import dotenv from 'dotenv';
 import Sequelize from 'sequelize';
 import bodyParser from 'body-parser';
 import {makeExecutableSchema} from 'graphql-tools';
+import winston from 'winston';
 
 import orm from './orm';
 import auth from './auth';
@@ -16,6 +17,16 @@ import resolvers from './graphql/resolvers';
 dotenv.config();
 
 const port = process.env.PORT || process.env.DEFAULT_PORT || 3000;
+
+const logger = winston.createLogger({
+  format: winston.format.json(),
+  transports: [
+    new winston.transports.File({
+      level: 'info',
+      filename: './logs/database.log',
+    }),
+  ],
+});
 
 const sequelize = new Sequelize(
     process.env.DB_NAME,
@@ -28,7 +39,11 @@ const sequelize = new Sequelize(
         max: 5,
         idle: 10000,
       },
-      logging: console.log.bind(console),
+      logging: (message) => {
+
+        logger.log({level: 'info', message});
+
+      },
       dialectOptions: {
         encrypt: true,
       },
