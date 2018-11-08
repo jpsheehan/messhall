@@ -64,6 +64,14 @@ app.use('/graphql',
 
     }));
 
+process.on('SIGINT', () => {
+
+  console.log('Shutting down gracefully...');
+  sequelize.close();
+  process.exit();
+
+});
+
 app.listen(port, () => {
 
   console.log(`Listening on port ${port}...`);

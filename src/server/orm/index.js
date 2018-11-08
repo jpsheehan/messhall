@@ -54,6 +54,7 @@ export default (sequelize) => {
 
   // build model associations
   User.hasMany(Token, {as: 'tokens'});
+  User.hasMany(History, {as: 'history'});
   Token.belongsTo(User);
 
   Reward.hasMany(Inventory, {as: 'inventory'});
@@ -63,59 +64,42 @@ export default (sequelize) => {
   Reward.belongsTo(History);
 
   // Sync and create some default data
+  // the force option drops all the tables beforehand
   sequelize.sync({force: true}).then(() => {
 
-    User.findOrCreate({
-      where: {email: 'jesse@example.com'},
-      defaults: {
-        email: 'jesse@example.com',
-        firstName: 'Jesse',
-        lastName: 'Example',
-        role: 'admin',
-        password: '1234512345',
-      },
+    User.create({
+      email: 'jesse@example.com',
+      firstName: 'Jesse',
+      lastName: 'Example',
+      role: 'admin',
+      password: '1234512345',
     });
-    User.findOrCreate({
-      where: {email: 'patrick@example.com'},
-      defaults: {
-        email: 'patrick@example.com',
-        firstName: 'Patrick',
-        lastName: 'Example',
-        role: 'manager',
-        password: '1234512345',
-      },
+    User.create({
+      email: 'patrick@example.com',
+      firstName: 'Patrick',
+      lastName: 'Example',
+      role: 'manager',
+      password: '1234512345',
     });
-    User.findOrCreate({
-      where: {email: 'jay@example.com'},
-      defaults: {
-        email: 'jay@example.com',
-        firstName: 'Jay',
-        lastName: 'Example',
-        role: 'user',
-        password: '1234512345',
-      },
+    User.create({
+      email: 'jay@example.com',
+      firstName: 'Jay',
+      lastName: 'Example',
+      role: 'user',
+      password: '1234512345',
     });
 
-    Reward.findOrCreate({
-      where: {name: 'Cadbury Dairy Milk'},
-      defaults: {
-        name: 'Cadbury Dairy Milk',
-        cost: 10,
-      },
+    Reward.create({
+      name: 'Cadbury Dairy Milk',
+      cost: 10,
     });
-    Reward.findOrCreate({
-      where: {name: 'Cadbury Crunchy'},
-      defaults: {
-        name: 'Cadbury Crunchy',
-        cost: 10,
-      },
+    Reward.create({
+      name: 'Cadbury Crunchy',
+      cost: 10,
     });
-    Reward.findOrCreate({
-      where: {name: 'Coca Cola 330mL'},
-      defaults: {
-        name: 'Coca Cola 330mL',
-        cost: 10,
-      },
+    Reward.create({
+      name: 'Coca Cola Can',
+      cost: 10,
     });
 
   });
