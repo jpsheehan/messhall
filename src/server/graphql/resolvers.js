@@ -140,6 +140,21 @@ export default {
     //   }
 
     // }
+    async user(root, args, context) {
+
+      try {
+
+        const {User, History} = context.models;
+        const history = await History.findByPk(root.id, {include: [User]});
+        return history.user;
+
+      } catch (err) {
+
+        return err;
+
+      }
+
+    },
   },
   Query: {
     users: withAuth(['user:view:all'], async (_, args, context) => {
