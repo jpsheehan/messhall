@@ -122,6 +122,9 @@ process.on('SIGINT', () => {
 
 app.listen(port, () => {
 
-  console.log(`Listening on http://127.0.0.1:${port}/graphql...`);
+  const host = `http://127.0.0.1:${port}`;
+  console.log(`Listening on port ${port}:`);
+  console.log(`- ${host}/graphql`);
+  console.log(`- ${host}/refresh`);
 
 });
