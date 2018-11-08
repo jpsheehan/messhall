@@ -166,9 +166,14 @@ process.on('SIGINT', () => {
 
 app.listen(port, () => {
 
-  const host = `http://127.0.0.1:${port}`;
-  console.log(`Listening on port ${port}:`);
-  console.log(`- ${host}/graphql`);
-  console.log(`- ${host}/refresh`);
+  const host = `http://127.0.0.1:${port}/`;
+  console.log('Messhall API Server');
+  console.log('===================');
+  console.log('');
+  console.log('The endpoints are:');
+  console.log(`- ${host}graphql`);
+  console.log(`- ${host}refresh`);
+  console.log('');
+  process.stdout.write('Please wait for the database to become ready... ');
 
 });

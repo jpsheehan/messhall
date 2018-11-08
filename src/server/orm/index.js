@@ -66,7 +66,7 @@ export default (sequelize) => {
 
   sequelize.sync().then(() => {
 
-    console.log('Database Ready');
+    console.log('Done');
 
   });
 
