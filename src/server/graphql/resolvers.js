@@ -7,7 +7,7 @@ export default {
       try {
 
         const {User} = context.models;
-        const user = await User.findById(root.id, {include: ['tokens']});
+        const user = await User.findByPk(root.id, {include: ['tokens']});
         return user.tokens;
 
       } catch (err) {
@@ -59,7 +59,7 @@ export default {
       try {
 
         const {User, Token} = context.models;
-        const token = await Token.findById(root.id, {include: [User]});
+        const token = await Token.findByPk(root.id, {include: [User]});
         return token.user;
 
       } catch (err) {
@@ -205,7 +205,7 @@ export default {
       try {
 
         const {Token} = context.models;
-        return Token.findById(args.id);
+        return Token.findByPk(args.id);
 
       } catch (err) {
 
@@ -235,7 +235,7 @@ export default {
       try {
 
         const {Reward} = context.models;
-        return Reward.findById(args.id);
+        return Reward.findByPk(args.id);
 
       } catch (err) {
 
@@ -292,7 +292,7 @@ export default {
       try {
 
         const {User} = context.models;
-        const user = await User.findById(args.input.id);
+        const user = await User.findByPk(args.input.id);
         await user.update(args.input.patch);
         return {user};
 
@@ -315,7 +315,7 @@ export default {
       try {
 
         const {User} = context.models;
-        const user = await User.findById(args.input.id);
+        const user = await User.findByPk(args.input.id);
         await user.destroy();
         return {user};
 
@@ -338,7 +338,7 @@ export default {
       try {
 
         const {User, Token} = context.models;
-        const token = await Token.findById(args.input.id, {include: [User]});
+        const token = await Token.findByPk(args.input.id, {include: [User]});
         if (token) {
 
           await token.destroy();

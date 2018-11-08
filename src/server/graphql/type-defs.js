@@ -11,8 +11,8 @@ export default `
     token(id: Int!): Token
     rewards: [Reward]
     reward(id: Int!): Reward
-    products: [Product]
-    product(id: Int!): Product
+    inventories: [Inventory]
+    inventory(id: Int!): Inventory
   }
 
   type User {
@@ -55,10 +55,10 @@ export default `
     cost: Int!
     stock: Int!
     history: [History]!
-    inventory: [Product]!
+    inventory: [Inventory]!
   }
 
-  type Product {
+  type Inventory {
     id: Int!
     date: String!
     quantity: Int!
