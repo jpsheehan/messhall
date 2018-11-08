@@ -54,21 +54,21 @@ export default {
       }
 
     },
-    // async redemptions(root, args, context) {
+    async history(root, args, context) {
 
-    //   try {
+      try {
 
-    //     const {Reward} = context.models;
-    //     const reward = await Reward.findById(root.id);
+        const {History} = context.models;
+        const history = await History.findAll({where: {rewardId: root.id}});
+        return history;
 
+      } catch (err) {
 
-    //   } catch (err) {
+        return err;
 
-    //     return err;
+      }
 
-    //   }
-
-    // },
+    },
     async inventory(root, args, context) {
 
       try {
@@ -84,6 +84,18 @@ export default {
       }
 
     },
+  },
+  History: {
+    // async reward(root, args, context) {
+
+    //   try {
+
+    //     const {Reward} = context.models;
+    //     const reward = await Reward.findAll({})
+
+    //   }
+
+    // }
   },
   Query: {
     users: withAuth(['user:view:all'], async (_, args, context) => {

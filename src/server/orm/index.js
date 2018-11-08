@@ -56,12 +56,13 @@ export default (sequelize) => {
   User.hasMany(Token, {as: 'tokens'});
   User.hasMany(History, {as: 'history'});
   Token.belongsTo(User);
+  History.belongsTo(User);
 
   Reward.hasMany(Inventory, {as: 'inventory'});
   Inventory.belongsTo(Reward);
 
-  History.hasOne(Reward, {as: 'reward'});
-  Reward.belongsTo(History);
+  History.belongsTo(Reward);
+  Reward.hasMany(History, {as: 'history'});
 
   sequelize.sync().then(() => {
 

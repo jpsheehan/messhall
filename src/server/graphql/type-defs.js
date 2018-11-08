@@ -23,7 +23,7 @@ export default `
     role: String!
     tokens: [Token]!
     points: Int!
-    history: [RewardHistory]!
+    history: [History]!
   }
 
   type Token {
@@ -40,7 +40,7 @@ export default `
     deleteToken(input: DeleteToken!): DeleteTokenPayload
   }
 
-  type RewardHistory {
+  type History {
     id: Int!
     date: String!
     points: Int!
@@ -54,7 +54,7 @@ export default `
     name: String!
     cost: Int!
     stock: Int!
-    redemptions: [RewardHistory]!
+    history: [History]!
     inventory: [Product]!
   }
 

@@ -25,6 +25,10 @@ function createHistoryModel(sequelize) {
       defaultValue: 'attendance',
       values: ['attendance', 'redemption'],
     },
+    points: {
+      type: INTEGER,
+      allowNull: false,
+    },
   };
 
   const options = {
