@@ -185,7 +185,7 @@ export default {
 
     }),
 
-    tokens: withAuth((_, args, context) => {
+    tokens: withAuth(['token:view:all'], (_, args, context) => {
 
       try {
 
@@ -215,7 +215,7 @@ export default {
 
     }),
 
-    rewards: withAuth((_, args, context) => {
+    rewards: withAuth(['reward:view:all'], (_, args, context) => {
 
       try {
 
@@ -236,6 +236,36 @@ export default {
 
         const {Reward} = context.models;
         return Reward.findByPk(args.id);
+
+      } catch (err) {
+
+        return err;
+
+      }
+
+    }),
+
+    inventories: withAuth(['inventory:view:all'], (_, args, context) => {
+
+      try {
+
+        const {Inventory} = context.models;
+        return Inventory.findAll();
+
+      } catch (err) {
+
+        return err;
+
+      }
+
+    }),
+
+    inventory: withAuth(['inventory:view'], (_, args, context) => {
+
+      try {
+
+        const {Inventory} = context.models;
+        return Inventory.findByPk(args.id);
 
       } catch (err) {
 

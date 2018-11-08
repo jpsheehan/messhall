@@ -19,6 +19,12 @@ export default {
     'reward:create',
     'reward:delete',
     'reward:update',
+    'inventory:view:all',
+    'inventory:view:self',
+    'inventory:view',
+    'inventory:create',
+    'inventory:update',
+    'inventory:delete',
   ],
   manager: [
     'user:view:self',
@@ -31,6 +37,12 @@ export default {
     'reward:create',
     'reward:delete',
     'reward:update',
+    'inventory:view:all',
+    'inventory:view:self',
+    'inventory:view',
+    'inventory:create',
+    'inventory:update',
+    'inventory:delete',
   ],
   user: [
     'user:view:self',
@@ -40,5 +52,6 @@ export default {
     'token:view:self',
     'reward:view',
     'reward:view:all',
+    'inventory:view:self',
   ],
 };
