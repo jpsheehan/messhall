@@ -86,17 +86,42 @@ app.use('/refresh', (req, res, next) => {
   // the force option drops all the tables beforehand
   sequelize.sync({force: true}).then(() => {
 
+    // create the admin account and log them in
     req.orm.User.create({
       email: 'jesse@example.com',
       firstName: 'Jesse',
       lastName: 'Example',
       role: 'admin',
       password: '1234512345',
-    }).then((admin) => {
+    }).then((jesse) => {
 
       req.orm.Token.create({
-        uuid: 'a24ee637-b3dc-40bf-bcb8-5377efadd570',
-        userId: admin.get('id'),
+        uuid: process.env.ADMIN_UUID || null,
+        userId: jesse.get('id'),
+      });
+
+      // add coca cola and add some inventory
+      req.orm.Reward.create({
+        name: 'Coca Cola Can',
+        cost: 10,
+      }).then((coke) => {
+
+        req.orm.Inventory.create({
+          quantity: 24,
+          rewardId: coke.get('id'),
+        });
+        req.orm.Inventory.create({
+          quantity: 24,
+          rewardId: coke.get('id'),
+        });
+
+        req.orm.History.create({
+          type: 'redemption',
+          points: coke.get('cost'),
+          rewardId: coke.get('id'),
+          userId: jesse.get('id'),
+        });
+
       });
 
     });
@@ -122,10 +147,6 @@ app.use('/refresh', (req, res, next) => {
     });
     req.orm.Reward.create({
       name: 'Cadbury Crunchy',
-      cost: 10,
-    });
-    req.orm.Reward.create({
-      name: 'Coca Cola Can',
       cost: 10,
     });
 

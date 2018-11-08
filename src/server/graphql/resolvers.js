@@ -75,12 +75,21 @@ export default {
 
       try {
 
-        // const {Reward, Inventory} = context.models;
-        // const reward = await Reward.findByPk(root.id, {include: [Inventory], as: 'inventory'});
+        const {Inventory, History} = context.models;
+        const inventories = await Inventory.findAll({
+          where: {rewardId: root.id},
+        });
+        const histories = await History.findAll({
+          where: {rewardId: root.id, type: 'redemption'},
+        });
 
-        // console.log(reward.inventory);
+        const stock = inventories.reduce((sum, inventory) => {
 
-        return 0;
+          return sum + inventory.get('quantity');
+
+        }, 0) - histories.length;
+
+        return stock || 0;
 
       } catch (err) {
 
