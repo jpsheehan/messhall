@@ -33,7 +33,7 @@
   "license": "All Rights Reserved",
   "private": true,
   "scripts": {
-    "start": "npm run build && node app.js",
+    "start": "npm run build & node app.js",
     "build": "babel src -d bin --source-maps inline --plugins source-map-support"
   },
   "engines": {
