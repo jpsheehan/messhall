@@ -33,8 +33,7 @@
   "license": "All Rights Reserved",
   "private": true,
   "scripts": {
-    "start": "npm run build & node app.js",
-    "build": "babel src -d bin --source-maps inline --plugins source-map-support"
+    "start": "node ./node_modules/babel-cli/bin/babel-node.js ./src -d ./bin --source-maps inline --plugins source-map-support & node ./app.js"
   },
   "engines": {
     "node": ">=10.6.0",
