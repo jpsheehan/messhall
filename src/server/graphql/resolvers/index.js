@@ -1,3 +1,5 @@
+import {GraphQLDate, GraphQLTime, GraphQLDateTime} from 'graphql-iso-date';
+
 import history from './history';
 import inventory from './inventory';
 import reward from './reward';
@@ -5,6 +7,10 @@ import token from './token';
 import user from './user';
 
 export default {
+  GraphQLDate,
+  GraphQLTime,
+  GraphQLDateTime,
+
   History: history.resolvers.History,
   Reward: reward.resolvers.Reward,
   Token: token.resolvers.Token,
@@ -21,6 +27,10 @@ export default {
     user: user.queries.user,
   },
   Mutation: {
+    createAttendance: history.mutations.createAttendance,
+    deleteAttendance: history.mutations.deleteAttendance,
+    createRedemption: history.mutations.createRedemption,
+    deleteRedemption: history.mutations.deleteRedemption,
     createInventory: inventory.mutations.createInventory,
     updateInventory: inventory.mutations.updateInventory,
     deleteInventory: inventory.mutations.deleteInventory,
