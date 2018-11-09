@@ -4,6 +4,7 @@ export default {
       id: Int!
       firstName: String!
       lastName: String!
+      name: String!
       email: String!
       role: String!
       tokens: [Token]!

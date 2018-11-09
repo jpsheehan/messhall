@@ -3,6 +3,13 @@ import withAuth from 'graphql-auth';
 export default {
   resolvers: {
     User: {
+      async name(root, _, context) {
+
+        const {User} = context.models;
+        const user = await User.findByPk(root.id);
+        return user.get('firstName') + ' ' + user.get('lastName');
+
+      },
       async tokens(root, _, context) {
 
         try {
