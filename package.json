@@ -27,13 +27,13 @@
   },
   "name": "messhall",
   "version": "1.0.0",
-  "main": "index.js",
+  "main": "app.js",
   "repository": "https://github.com/jpsheehan/messhall.git",
   "author": "Jesse Sheehan <jesse@sheehan.nz>",
   "license": "All Rights Reserved",
   "private": true,
   "scripts": {
-    "start": "npm run build && node bin/index.js",
+    "start": "npm run build && node app.js",
     "build": "babel src -d bin --source-maps inline --plugins source-map-support"
   },
   "engines": {
