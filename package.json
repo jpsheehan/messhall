@@ -34,7 +34,7 @@
   "private": true,
   "scripts": {
     "start": "node app.js",
-    "build": "babel ./src -d ./bin --source-maps inline --plugins source-map-support"
+    "build": "node ./node_modules/babel-cli/bin/babel.js ./src -d ./bin --source-maps inline --plugins source-map-support"
   },
   "engines": {
     "node": "10.6.0",
