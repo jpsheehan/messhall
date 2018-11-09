@@ -107,7 +107,7 @@ IF EXIST "%DEPLOYMENT_TARGET%\package.json" (
 
 :: 4. Run build command
 pushd "%DEPLOYMENT_SOURCE%"
-call :ExecuteCmd !NPM_CMD! run-script build
+call :ExecuteCmd !NPM_CMD! --scripts-prepend-node-path run-script build
 IF !ERRORLEVEL! NEQ 0 goto error
 popd
 
