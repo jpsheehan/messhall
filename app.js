@@ -1,1 +1,0 @@
-require('./bin/index.js');
