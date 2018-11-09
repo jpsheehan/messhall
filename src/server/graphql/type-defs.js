@@ -34,13 +34,19 @@ export default `
 
   type Mutation {
     logIn(input: LogIn!): LogInPayload
+    deleteToken(input: DeleteToken!): DeleteTokenPayload
+
     createUser(input: CreateUser!): CreateUserPayload
     updateUser(input: UpdateUser!): UpdateUserPayload
     deleteUser(input: DeleteUser!): DeleteUserPayload
-    deleteToken(input: DeleteToken!): DeleteTokenPayload
+
     createReward(input: CreateReward!): CreateRewardPayload
     updateReward(input: UpdateReward!): UpdateRewardPayload
     deleteReward(input: DeleteReward!): DeleteRewardPayload
+
+    createInventory(input: CreateInventory!): CreateInventoryPayload
+    updateInventory(input: UpdateInventory!): UpdateInventoryPayload
+    deleteInventory(input: DeleteInventory!): DeleteInventoryPayload
   }
 
   type History {
@@ -100,6 +106,18 @@ export default `
     reward: Reward
   }
 
+  type CreateInventoryPayload {
+    inventory: Inventory
+  }
+
+  type UpdateInventoryPayload {
+    inventory: Inventory
+  }
+
+  type DeleteInventoryPayload {
+    inventory: Inventory
+  }
+
   input LogIn {
     email: String
     password: String
@@ -137,6 +155,20 @@ export default `
   }
 
   input DeleteReward {
+    id: Int!
+  }
+
+  input CreateInventory {
+    quantity: Int!
+    rewardId: Int!
+  }
+
+  input UpdateInventory {
+    id: Int!
+    patch: CreateInventory
+  }
+
+  input DeleteInventory {
     id: Int!
   }
 `;
