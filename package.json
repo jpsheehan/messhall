@@ -37,8 +37,8 @@
     "build": "babel ./src -d ./bin --source-maps inline --plugins source-map-support"
   },
   "engines": {
-    "node": ">=10.6.0",
-    "npm": ">=6.1.0"
+    "node": "10.6.0",
+    "npm": "6.1.0"
   },
   "devDependencies": {
     "eslint": "^5.7.0",
