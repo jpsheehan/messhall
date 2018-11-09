@@ -79,6 +79,20 @@ export default {
         ? ['user:view']
         : ['user:view:self'];
 
+    }, async (_, args, context) => {
+
+      try {
+
+        const {User} = context.models;
+        const user = await User.findByPk(args.id);
+        return user;
+
+      } catch (err) {
+
+        return err;
+
+      }
+
     }),
 
   },
