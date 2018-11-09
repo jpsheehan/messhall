@@ -1,13 +1,14 @@
 import 'babel-polyfill';
 
 import Express from 'express';
-import expressGraphQL from 'express-graphql';
 import cors from 'cors';
 import dotenv from 'dotenv';
 import Sequelize from 'sequelize';
 import bodyParser from 'body-parser';
-import {makeExecutableSchema} from 'graphql-tools';
 import winston from 'winston';
+
+import expressGraphQL from 'express-graphql';
+import {makeExecutableSchema} from 'graphql-tools';
 
 import orm from './orm';
 import auth from './auth';

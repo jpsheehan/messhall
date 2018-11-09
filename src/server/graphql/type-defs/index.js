@@ -41,6 +41,10 @@ defs.forEach((definition) => {
 
 export default `
 
+  scalar GraphQLDate
+  scalar GraphQLTime
+  scalar GraphQLDateTime
+
   schema {
     query: Query
     mutation: Mutation
