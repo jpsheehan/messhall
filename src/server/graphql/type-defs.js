@@ -38,6 +38,9 @@ export default `
     updateUser(input: UpdateUser!): UpdateUserPayload
     deleteUser(input: DeleteUser!): DeleteUserPayload
     deleteToken(input: DeleteToken!): DeleteTokenPayload
+    createReward(input: CreateReward!): CreateRewardPayload
+    updateReward(input: UpdateReward!): UpdateRewardPayload
+    deleteReward(input: DeleteReward!): DeleteRewardPayload
   }
 
   type History {
@@ -85,17 +88,29 @@ export default `
     token: String
   }
 
+  type CreateRewardPayload {
+    reward: Reward
+  }
+
+  type UpdateRewardPayload {
+    reward: Reward
+  }
+
+  type DeleteRewardPayload {
+    reward: Reward
+  }
+
   input LogIn {
     email: String
     password: String
   }
 
   input CreateUser {
-    firstName: String
-    lastName: String
-    email: String
-    role: String
-    password: String
+    firstName: String!
+    lastName: String!
+    email: String!
+    role: String!
+    password: String!
   }
 
   input UpdateUser {
@@ -108,6 +123,20 @@ export default `
   }
 
   input DeleteToken {
+    id: Int!
+  }
+
+  input CreateReward {
+    name: String!
+    cost: Int!
+  }
+
+  input UpdateReward {
+    id: Int!
+    patch: CreateReward
+  }
+
+  input DeleteReward {
     id: Int!
   }
 `;

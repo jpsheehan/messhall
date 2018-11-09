@@ -385,5 +385,61 @@ export default {
       }
 
     }),
+
+    createReward: withAuth(['reward:create'], async (_, args, context) => {
+
+      try {
+
+        const {Reward} = context.models;
+        const reward = await Reward.create(args.input);
+        return {reward};
+
+      } catch (err) {
+
+        return err;
+
+      }
+
+    }),
+
+    updateReward: withAuth(['reward:update'], async (_, args, context) => {
+
+      try {
+
+        const {Reward} = context.models;
+        const reward = await Reward.findByPk(args.input.id);
+        await reward.update(args.input.patch);
+        return {reward};
+
+      } catch (err) {
+
+        return err;
+
+      }
+
+    }),
+
+    deleteReward: withAuth(['reward:delete'], async (_, args, context) => {
+
+      try {
+
+        const {Reward} = context.models;
+        const reward = await Reward.findByPk(args.input.id);
+        if (reward) {
+
+          await reward.destroy();
+          return {reward};
+
+        }
+
+        return {reward: null};
+
+      } catch (err) {
+
+        return err;
+
+      }
+
+    }),
   },
 };
