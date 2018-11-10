@@ -12,7 +12,8 @@ export default {
 
     type CreateTokenPayload {
       user: User
-      token: String
+      authToken: String
+      token: Token
     }
   `,
   queries: `
@@ -21,6 +22,7 @@ export default {
   `,
   mutations: `
     createToken(input: CreateToken!): CreateTokenPayload
+    createSuperToken(input: CreateToken!): CreateTokenPayload
     deleteToken(input: DeleteToken!): DeleteTokenPayload
   `,
   inputs: `

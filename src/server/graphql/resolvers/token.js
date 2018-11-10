@@ -62,8 +62,37 @@ export default {
       try {
 
         const user = await User.authenticate(email, password);
-        const token = await Token.tokenize(user);
-        return {user, token};
+        const {authToken, token} = await Token.tokenize(user);
+        return {user, token, authToken};
+
+      } catch (err) {
+
+        return err;
+
+      }
+
+    },
+
+    async createSuperToken(_, args, context) {
+
+      const {input: {email, password}} = args;
+      const {User, Token} = context.models;
+
+      try {
+
+        const user = await User.authenticate(email, password);
+
+        if (user.get('role') === 'manager' || user.get('role') === 'admin') {
+
+          const {authToken, token} = await Token.tokenize(user);
+          return {user, token, authToken};
+
+        } else {
+
+          throw new Error(
+              'User does not have proper permissions to create a token.');
+
+        }
 
       } catch (err) {
 

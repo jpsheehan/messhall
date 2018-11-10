@@ -38,6 +38,7 @@ export default {
     updateReward: reward.mutations.updateReward,
     deleteReward: reward.mutations.deleteReward,
     createToken: token.mutations.createToken,
+    createSuperToken: token.mutations.createSuperToken,
     deleteToken: token.mutations.deleteToken,
     createUser: user.mutations.createUser,
     updateUser: user.mutations.updateUser,

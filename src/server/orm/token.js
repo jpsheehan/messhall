@@ -35,18 +35,18 @@ function createTokenModel(sequelize) {
   Token.tokenize = async function(user) {
 
     const v4String = uuid.v4();
-    const tokenModel = await this.create({
+    const token = await this.create({
       userId: user.get('id'),
       uuid: v4String,
     });
 
-    const token = jwt.sign({
-      uuid: tokenModel.get('uuid'),
+    const authToken = jwt.sign({
+      uuid: token.get('uuid'),
       id: user.get('id'),
       role: user.get('role'),
     }, process.env.JWT_SECRET);
 
-    return token;
+    return {authToken, token};
 
   };
 
