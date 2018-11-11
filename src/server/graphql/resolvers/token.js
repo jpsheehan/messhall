@@ -1,4 +1,5 @@
 import withAuth from 'graphql-auth';
+import {isSelf} from './utils';
 
 export default {
   resolvers: {
@@ -37,6 +38,7 @@ export default {
 
     }),
 
+    // TODO: Add proper permissions to this.
     token: withAuth((_, args, context) => {
 
       try {
@@ -104,12 +106,9 @@ export default {
 
     deleteToken: withAuth(async (_, args, context) => {
 
-      const {Token, User} = context.models;
-      const tokenId = args.input.id;
-      const token = await Token.findByPk(tokenId, {include: [User]});
-      return context.user.get('id') !== token.user.id
+      return (isSelf(context, args.input.id)
           ? ['token:delete']
-          : ['token:delete:self'];
+          : ['token:delete:self']);
 
     }, async (_, args, context) => {
 
