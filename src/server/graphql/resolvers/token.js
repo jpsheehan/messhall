@@ -107,8 +107,8 @@ export default {
     deleteToken: withAuth(async (_, args, context) => {
 
       return (isSelf(context, args.input.id)
-          ? ['token:delete']
-          : ['token:delete:self']);
+          ? ['token:delete:self']
+          : ['token:delete']);
 
     }, async (_, args, context) => {
 
