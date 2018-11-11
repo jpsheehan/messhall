@@ -102,9 +102,12 @@ export default {
 
     },
 
-    deleteToken: withAuth((_, args, context) => {
+    deleteToken: withAuth(async (_, args, context) => {
 
-      return context.user.get('id') !== args.id
+      const {Token, User} = context.models;
+      const tokenId = args.input.id;
+      const token = await Token.findByPk(tokenId, {include: [User]});
+      return context.user.get('id') !== token.user.id
           ? ['token:delete']
           : ['token:delete:self'];
 
