@@ -66,22 +66,22 @@ export default {
   `,
   queries: `
     
-    # Requires admin. Returns a list of all Users in the system.
+    # Requires admin role. Returns a list of all Users in the system.
     users: [User]
 
-    # Requires admin. Returns a single User based on ID.<br />
-    # Requires user/manager. Returns the signed in User based on ID.
+    # Requires admin role. Returns a single User based on ID.<br />
+    # Requires user or manager roles. Returns the signed in User based on ID.
     user(id: Int!): User
   `,
   mutations: `
     
-    # Requires admin. Creates a new User in the system.
+    # Requires admin role. Creates a new User in the system.
     createUser(input: CreateUser!): CreateUserPayload
 
-    # Requires admin. Updates an existing User.
+    # Requires admin role. Updates an existing User.
     updateUser(input: UpdateUser!): UpdateUserPayload
 
-    # Requires admin. Deletes an existing User.
+    # Requires admin role. Deletes an existing User.
     deleteUser(input: DeleteUser!): DeleteUserPayload
   `,
   inputs: `
