@@ -47,10 +47,10 @@ export default {
   `,
   queries: `
     
-    # Requires Admin role. Gets a list of all active Tokens in the system.
+    # Requires admin role. Gets a list of all active Tokens in the system.
     tokens: [Token]
 
-    # Requires Admin role. Gets any Token in the system by the Token ID.<br />
+    # Requires admin role. Gets any Token in the system by the Token ID.<br />
     # Requires any role. Gets any Token in the system that belongs to the
     # currently signed in User.
     token(id: Int!): Token
@@ -65,8 +65,8 @@ export default {
     # be returned.
     createSuperToken(input: CreateToken!): CreateTokenPayload
 
-    # Deletes a Token from the system. The Token must belong to the currently
-    # signed in User.
+    # Requires any role. Deletes a Token from the system. The Token must belong
+    # to the currently signed in User.
     deleteToken(input: DeleteToken!): DeleteTokenPayload
   `,
   inputs: `
