@@ -34,13 +34,15 @@
   "private": true,
   "scripts": {
     "start": "node app.js",
-    "build": "node ./node_modules/babel-cli/bin/babel.js ./src -d ./bin --source-maps inline --plugins source-map-support"
+    "build": "node ./node_modules/babel-cli/bin/babel.js ./src -d ./bin --source-maps inline --plugins source-map-support",
+    "docs": "node ./node_modules/@2fd/graphdoc/bin/graphdoc.js -e http://localhost:3000/graphql -o ./docs/ --force"
   },
   "engines": {
     "node": "10.6.0",
     "npm": "6.1.0"
   },
   "devDependencies": {
+    "@2fd/graphdoc": "^2.4.0",
     "eslint": "^5.7.0",
     "eslint-config-google": "^0.11.0"
   }
