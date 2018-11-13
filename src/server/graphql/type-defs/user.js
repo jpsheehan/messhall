@@ -90,20 +90,20 @@ export default {
     input CreateUser {
 
       # The first name of the User.
-      firstName: String!
+      firstName: String
 
       # The last name of the User.
-      lastName: String!
+      lastName: String
 
       # The email address of the User.
-      email: String!
+      email: String
 
       # The role the User is to have. Must be one of 'user', 'manager' or
       # 'admin'
-      role: String!
+      role: String
 
       # The password that the User is to have.
-      password: String!
+      password: String
 
     }
 
