@@ -63,7 +63,33 @@ export default {
 
         }),
 
-    deleteAttendance: withAuth(['attendance:delete'],
+    deleteAttendance: withAuth(
+        async (_, args, context) => {
+
+          const {History, User} = context.models;
+          const history = await History.findByPk(
+              args.input.id, {include: User}
+          );
+
+          if (history) {
+
+            if (history.user.id === context.user.get('id')) {
+
+              return ['attendance:delete:self'];
+
+            } else {
+
+              return ['attendance:delete'];
+
+            };
+
+          } else {
+
+            return ['missing'];
+
+          }
+
+        },
         async (_, args, context) => {
 
           try {

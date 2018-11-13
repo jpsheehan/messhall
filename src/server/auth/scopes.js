@@ -46,6 +46,7 @@ export default {
     'inventory:update',
     'inventory:delete',
     'attendance:create:self',
+    'attendance:delete',
     'redemption:create:self',
   ],
   user: [
@@ -58,6 +59,7 @@ export default {
     'reward:view:all',
     'inventory:view',
     'attendance:create:self',
+    'attendance:delete:self',
     'redemption:create:self',
   ],
 };
