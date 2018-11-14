@@ -91,8 +91,8 @@ function createUserModel(sequelize, hashMethod) {
       allowNull: false,
       validate: {
         len: {
-          args: [8, 32],
-          msg: 'Password too short',
+          args: [8, 128],
+          msg: 'Password must be between 8 and 128 characters long',
         },
       },
     },
