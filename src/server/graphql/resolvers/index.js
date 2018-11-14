@@ -25,6 +25,7 @@ export default {
     token: token.queries.token,
     users: user.queries.users,
     user: user.queries.user,
+    userSearch: user.queries.userSearch,
   },
   Mutation: {
     createAttendance: history.mutations.createAttendance,

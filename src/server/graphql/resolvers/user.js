@@ -1,4 +1,5 @@
 import withAuth from 'graphql-auth';
+import {Op} from 'sequelize';
 
 export default {
   resolvers: {
@@ -93,6 +94,62 @@ export default {
         const {User} = context.models;
         const user = await User.findByPk(args.id);
         return user;
+
+      } catch (err) {
+
+        return err;
+
+      }
+
+    }),
+
+    userSearch: withAuth(['user:search'], async (_, args, context) => {
+
+      try {
+
+        const query = args.nameOrId;
+
+        const {User} = context.models;
+
+        let users = [];
+
+        if (query) {
+
+          if (isNaN(parseInt(query))) {
+
+            // we have a string query
+            users = await User.findAll({
+              where: {
+                [Op.or]: [
+                  {firstName: {[Op.like]: `%${query}%`}},
+                  {lastName: {[Op.like]: `%${query}%`}},
+                ],
+              },
+            });
+
+          } else {
+
+            // we have an integer query
+            users = await User.findAll({
+              where: {
+                [Op.or]: [
+                  {id: parseInt(query)},
+                  {firstName: {[Op.like]: `%${query}%`}},
+                  {lastName: {[Op.like]: `%${query}%`}},
+                ],
+              },
+            });
+
+          }
+
+        } else {
+
+          // we have an empty query
+          users = await User.findAll();
+
+        }
+
+        return users;
 
       } catch (err) {
 

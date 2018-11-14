@@ -72,6 +72,11 @@ export default {
     # Requires admin role. Returns a single User based on ID.<br />
     # Requires user or manager roles. Returns the signed in User based on ID.
     user(id: Int!): User
+
+    # Requires admin role. Returns a list of all Users that match the query.
+    # If the query is a name, a partial match is sufficient.
+    # If the query is an ID a whole match is required.
+    userSearch(nameOrId: String): [User]
   `,
   mutations: `
     

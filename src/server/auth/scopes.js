@@ -5,6 +5,7 @@ export default {
     'user:delete',
     'user:view',
     'user:view:all',
+    'user:search',
     'token:create',
     'token:delete',
     'token:view',
