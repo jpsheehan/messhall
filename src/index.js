@@ -29,26 +29,35 @@ const logger = winston.createLogger({
   ],
 });
 
+const mssqlOptions = {
+  dialect: 'mssql',
+  host: process.env.DB_HOST,
+  pool: {
+    min: 0,
+    max: 5,
+    idle: 10000,
+  },
+  logging: (message) => {
+
+    logger.log({level: 'info', message});
+
+  },
+  dialectOptions: {
+    encrypt: true,
+  },
+};
+
+const sqliteOptions = {
+  dialect: 'sqlite',
+  storage: './data.db',
+};
+
 const sequelize = new Sequelize(
     process.env.DB_NAME,
     process.env.DB_USER,
-    process.env.DB_PASS, {
-      dialect: 'mssql',
-      host: process.env.DB_HOST,
-      pool: {
-        min: 0,
-        max: 5,
-        idle: 10000,
-      },
-      logging: (message) => {
-
-        logger.log({level: 'info', message});
-
-      },
-      dialectOptions: {
-        encrypt: true,
-      },
-    });
+    process.env.DB_PASS,
+    sqliteOptions
+);
 
 const executableSchema = makeExecutableSchema({
   typeDefs,
