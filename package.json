@@ -23,8 +23,7 @@
     "source-map-support": "^0.5.9",
     "sqlite3": "^4.0.4",
     "tedious": "^3.0.1",
-    "uuid": "^3.3.2",
-    "winston": "^3.1.0"
+    "uuid": "^3.3.2"
   },
   "name": "messhall",
   "version": "1.0.0",
