@@ -5,7 +5,6 @@ import cors from 'cors';
 import dotenv from 'dotenv';
 import Sequelize from 'sequelize';
 import bodyParser from 'body-parser';
-import winston from 'winston';
 
 import expressGraphQL from 'express-graphql';
 import {makeExecutableSchema} from 'graphql-tools';
@@ -19,16 +18,6 @@ dotenv.config();
 
 const port = process.env.PORT || process.env.DEFAULT_PORT || 3000;
 
-const logger = winston.createLogger({
-  format: winston.format.json(),
-  transports: [
-    new winston.transports.File({
-      level: 'info',
-      filename: './logs/database.log',
-    }),
-  ],
-});
-
 const mssqlOptions = {
   dialect: 'mssql',
   host: process.env.DB_HOST,
@@ -36,11 +25,6 @@ const mssqlOptions = {
     min: 0,
     max: 5,
     idle: 10000,
-  },
-  logging: (message) => {
-
-    logger.log({level: 'info', message});
-
   },
   dialectOptions: {
     encrypt: true,
@@ -56,7 +40,11 @@ const sequelize = new Sequelize(
     process.env.DB_NAME,
     process.env.DB_USER,
     process.env.DB_PASS,
-    sqliteOptions
+    process.env.DB_TYPE === 'sqlite'
+      ? sqliteOptions
+      : process.env.DB_TYPE === 'azure'
+        ? mssqlOptions
+        : null,
 );
 
 const executableSchema = makeExecutableSchema({
