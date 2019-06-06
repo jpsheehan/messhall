@@ -1,27 +1,26 @@
 {
   "dependencies": {
-    "async": "^2.6.1",
-    "babel-cli": "^6.26.0",
-    "babel-core": "^6.26.3",
-    "babel-plugin-source-map-support": "^2.0.1",
-    "babel-polyfill": "^6.26.0",
-    "babel-preset-env": "^1.7.0",
+    "@babel/cli": "^7.4.4",
+    "@babel/core": "^7.4.5",
+    "@babel/polyfill": "^7.4.4",
+    "@babel/preset-env": "^7.4.5",
+    "async": "^2.6.2",
     "basic-auth": "^2.0.1",
     "bcryptjs": "^2.4.3",
-    "body-parser": "^1.18.3",
-    "cors": "^2.8.4",
-    "dotenv": "^6.1.0",
-    "express": "^4.16.3",
+    "body-parser": "^1.19.0",
+    "cors": "^2.8.5",
+    "dotenv": "^6.2.0",
+    "express": "^4.17.1",
     "express-graphql": "^0.6.12",
-    "graphql": "^14.0.2",
-    "graphql-auth": "^0.2.3",
+    "graphql": "^14.3.1",
+    "graphql-auth": "^0.2.6",
     "graphql-iso-date": "^3.6.1",
-    "graphql-tools": "^4.0.3",
-    "jsonwebtoken": "^8.3.0",
+    "graphql-tools": "^4.0.4",
+    "jsonwebtoken": "^8.5.1",
     "lodash": "^4.17.11",
-    "sequelize": "^4.41.0",
-    "source-map-support": "^0.5.9",
-    "sqlite3": "^4.0.4",
+    "sequelize": "^4.44.0",
+    "source-map-support": "^0.5.12",
+    "sqlite3": "^4.0.8",
     "tedious": "^3.0.1",
     "uuid": "^3.3.2"
   },
@@ -34,16 +33,14 @@
   "private": true,
   "scripts": {
     "start": "node app.js",
-    "build": "node ./node_modules/babel-cli/bin/babel.js ./src -d ./bin --source-maps inline --plugins source-map-support",
-    "docs": "node ./node_modules/@2fd/graphdoc/bin/graphdoc.js -e http://localhost:3000/graphql -o ./docs/ --force"
+    "build": "babel ./src -d ./bin --source-maps inline"
   },
   "engines": {
     "node": "10.6.0",
     "npm": "6.1.0"
   },
   "devDependencies": {
-    "@2fd/graphdoc": "^2.4.0",
-    "eslint": "^5.7.0",
+    "eslint": "^5.16.0",
     "eslint-config-google": "^0.11.0"
   }
 }
