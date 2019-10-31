@@ -18,7 +18,7 @@
     "graphql-tools": "^4.0.4",
     "jsonwebtoken": "^8.5.1",
     "lodash": "^4.17.11",
-    "sequelize": "^4.44.0",
+    "sequelize": "^5.15.1",
     "source-map-support": "^0.5.12",
     "sqlite3": "^4.0.8",
     "tedious": "^3.0.1",
